@@ -2,21 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { Stream } from '../../models/stream';
 import { StreamService } from '../../services/stream.service';
 import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
-import { Video } from '../../models/video';
 import { VideosService } from '../../services/videos.service';
+import { ConfirmationService, Message } from '../../../node_modules/primeng/primeng';
 
 @Component({
   selector: 'app-stream',
   templateUrl: './stream.component.html',
-  styleUrls: ['./stream.component.css']
+  styleUrls: ['./stream.component.css'],
+  providers: [ConfirmationService]
 })
 export class StreamComponent implements OnInit {
 
+  msgs: Message[] = [];
   streams: Stream[];
+  streamTableCols = [
+    { field : 'eit'}, { field : 'lcn'} , { field : 'usi'}, { field : 'name' }, { field : 'videofile' }, { field : 'enabled' },
+    { field : 'status' } , { field : 'action' }, { field : 'tsid:sid:onid' } , { field : 'address' } , { field : 'port'}
+  ];
   videosArray: any;
-  streamTableCols: any[];
   display = false;
-
   newStreamForm = new FormGroup ({
     lcn             : new FormControl({value: '', disabled: false}),
     usi         	  : new FormControl({value: '', disabled: false}),
@@ -30,8 +34,8 @@ export class StreamComponent implements OnInit {
 
   });
 
-  constructor(private streamService: StreamService , private videoService: VideosService) { }
-
+  constructor(private streamService: StreamService , private videoService: VideosService ,
+              private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.streamService.getStream()
@@ -49,32 +53,6 @@ export class StreamComponent implements OnInit {
         }, err => {
           // console.log(err)
     });
-    this.streamTableCols = [
-      { field : 'eit'}, { field : 'lcn'} , { field : 'usi'}, { field : 'name' }, { field : 'videofile' }, { field : 'enabled' },
-      { field : 'status' } , { field : 'action' }, { field : 'tsid:sid:onid' } , { field : 'address' } , { field : 'port'} ,
-      { field : 'show' },
-    ];
-  }
-
-
-  showDialog() {
-    this.display = true;
-  }
-
-  selectOptionsValues() {
-    for (let i = 0; i < this.videosArray.length; i++) {
-      delete this.videosArray[i].description;
-      delete this.videosArray[i].audio;
-      delete this.videosArray[i].color;
-      delete this.videosArray[i].csa5;
-      delete this.videosArray[i].enabled;
-      delete this.videosArray[i].format;
-      delete this.videosArray[i].ocs;
-      delete this.videosArray[i].pmt;
-      delete this.videosArray[i].resolution;
-      delete this.videosArray[i].status;
-      delete this.videosArray[i].subtitle;
-    }
   }
 
   saveStream(value: string) {
@@ -101,6 +79,7 @@ export class StreamComponent implements OnInit {
             console.log(data);
             streams.push(stream);
             this.streams = streams;
+            this.reloadStreamTable();
           },
           err => {
             console.log(err);
@@ -109,9 +88,57 @@ export class StreamComponent implements OnInit {
       this.display = false;
   }
 
+  showDialog() {
+    this.display = true;
+  }
 
+  selectOptionsValues() {
+    for (let i = 0; i < this.videosArray.length; i++) {
+      delete this.videosArray[i].description;
+      delete this.videosArray[i].audio;
+      delete this.videosArray[i].color;
+      delete this.videosArray[i].csa5;
+      delete this.videosArray[i].enabled;
+      delete this.videosArray[i].format;
+      delete this.videosArray[i].ocs;
+      delete this.videosArray[i].pmt;
+      delete this.videosArray[i].resolution;
+      delete this.videosArray[i].status;
+      delete this.videosArray[i].subtitle;
+    }
+  }
 
+  ConfirmDeleteStream(id: number) {
+    console.log(id);
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this stream ?',
+      header: 'Delete Confirmation',
+      accept: () => {
+        this.streamService.deleteStream(id)
+          .subscribe(
+              data => {
+                this.reloadStreamTable();
+                this.msgs = [];
+                this.msgs.push({severity: 'success', summary: 'Stream successfully deleted'});
+              }, err => {
+                  console.log(err);
+              }
+          );
+      },
+      reject: () => {
+        //  this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+      }
+    });
+  }
 
-
-
+  reloadStreamTable() {
+    this.streamService.getStream()
+    .subscribe(
+        data => {
+            this.streams = data;
+        }, err => {
+            console.log(err);
+        }
+  );
+  }
 }

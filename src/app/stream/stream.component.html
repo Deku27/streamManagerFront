@@ -1,57 +1,59 @@
+<p-growl [(value)]="msgs"></p-growl>
 <p-table #dt  [columns]='streamTableCols' [value]='streams' [paginator]='true' [rows]='7' [resizableColumns]='true'>
   <ng-template pTemplate='caption'>
       <div style='text-align: right'>
-          <i class='fa fa-search' style='margin:4px 4px 0 0'></i>
-          <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        <i class='fa fa-search' style='margin:4px 4px 0 0'></i>
+        <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        <button type='button' pButton icon='fa fa-plus' (click)='showDialog()' label='Add' ></button>
       </div>
+      <div style='text-align: left'>
+
+        <!--button type='button' pButton icon='fa fa-plus' (click)='openNewStreamDialog()' label='Add' ></button-->
+    </div>
   </ng-template>
 
   <ng-template pTemplate='header' >
       <tr>
         <th pResizableColumn width='3%'>eit</th>
-        <th pResizableColumn width='4%'>show</th>
         <th pResizableColumn width='5%'>LCN</th>
         <th pResizableColumn width='5.5%'>USI</th>
         <th pResizableColumn  >name</th>
         <th pResizableColumn >file</th>
-        <th pResizableColumn width='4%'>enabled</th>
+        <th pResizableColumn width='5%'> enabled</th>
         <th pResizableColumn width='8%'>status</th>
         <th pResizableColumn width='8%'>tsid:sid:onid</th>
         <th pResizableColumn width='8%'>address</th>
-        <th pResizableColumn width='5%'>port</th>
-        <th pResizableColumn width='5%'>action</th>
+        <th pResizableColumn width='4%'>port</th>
+        <th pResizableColumn width='8%'>action</th>
 
 
       </tr>
   </ng-template>
-
   <ng-template pTemplate='body' let-stream  let-columns='columns'>
       <tr>
-        <td></td>
         <td></td>
         <td> {{stream.lcn}}</td>
         <td> {{stream.usi}}</td>
         <td> {{stream.name}}</td>
         <td> {{stream.videofile}}</td>
-        <td> {{stream.enable}}</td>
+        <td > <i *ngIf="!stream.enable" class="fa fa-times-circle"></i> <i *ngIf="stream.enable" class="fa fa-check" style="color:#4CAF50"></i ></td>
         <td> {{stream.status}}</td>
         <td> {{stream.tsid}} : {{stream.sid}} : {{stream.onid}}  </td>
         <td> {{stream.address}}</td>
         <td> {{stream.port}}</td>
-        <td></td>
+        <td><i class="fa fa-edit"></i > <i class="fa fa-plus-circle"></i >  <i class="fa fa-trash" (click)="ConfirmDeleteStream(stream.ideit)" style="color: #f44336;" ></i ></td>
       </tr>
   </ng-template>
 
   <ng-template pTemplate='summary' let-rowData  >
-      <div style='text-align: left'>
-          <button type='button' pButton icon='fa fa-plus' (click)='showDialog()' label='Add' ></button>
-          <!--button type='button' pButton icon='fa fa-plus' (click)='openNewStreamDialog()' label='Add' ></button-->
-      </div>
-    </ng-template>
+
+  </ng-template>
 
 </p-table>
 
-<form [formGroup] ="newStreamForm" (ngSubmit)="saveStream()">
+<p-confirmDialog></p-confirmDialog>
+
+<form [formGroup] ="newStreamForm">
   <p-dialog header="Create Stream" [(visible)]="display" [modal]="true" [responsive]="true" [width]="700" [minWidth]="400" [minY]="70"
   [contentStyle]="{'overflow':'visible'}" [maximizable]="true" [baseZIndex]="10000">
     <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" >
@@ -95,7 +97,7 @@
             <label for="videoFile">video File:</label>
         </div>
         <div class="ui-grid-col-9">
-            <p-dropdown [style]="{'width':'50%'}" [options]="videosArray" placeholder="Select a City" optionLabel="filename" [showClear]="true"
+            <p-dropdown [style]="{'width':'50%'}" [options]="videosArray" placeholder="Select a Video" optionLabel="filename" [showClear]="true"
 
             formControlName="videofile"></p-dropdown>
         </div>
@@ -132,10 +134,10 @@
           </div>
       </div>
         </div>
-      <pre>{{newStreamForm.value | json }}</pre>
+      <!--pre>{{newStreamForm.value | json }} </pre-->
 
     <p-footer>
-        <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
+        <button type="submit" pButton icon="pi pi-check" (click)="saveStream()" label="Yes"></button>
         <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
     </p-footer>
   </p-dialog>

@@ -6,7 +6,9 @@ body{
   overflow-x: hidden;
 }
 
-
+.ui-widget-content{
+  border: 0px solid #d4d4d4 !important;
+}
 .ui-menubar,.ui-menu-child,.ui-menu {
   background: #009DE0 !important;
   color: white;
@@ -33,5 +35,10 @@ td{
   padding-bottom:20px !important;
   padding-top:10px !important;
 }
+.ui-dialog-footer{
+  border-top: 1px solid #d4d4d4 !important;
 
+}
+
+i:hover { cursor: pointer; text-decoration: underline; }
 

@@ -1,5 +1,5 @@
 export class Stream {
-
+  ideit: number;
   lcn: number ;
   usi: number ;
   name: string ;

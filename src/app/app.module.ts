@@ -10,21 +10,20 @@ import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule, FileUploadModule, InputTextModule, MenubarModule, MenuItemContent,
-  CardModule, DropdownModule, MessageModule, MessagesModule, InputMaskModule} from 'primeng/primeng';
+  CardModule, DropdownModule, MessageModule, MessagesModule, InputMaskModule, ConfirmDialogModule,
+   ConfirmationService,
+   GrowlModule} from 'primeng/primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StreamComponent } from './stream/stream.component';
-import { VideosService } from '../services.ts/videos.service';
-import { StreamService } from '../services.ts/stream.service';
+import { VideosService } from '../services/videos.service';
+import { StreamService } from '../services/stream.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 const appRoutes: Routes = [
  /* {
     path:'videos',
     component: ListVideoComponent
   },
-  {
-    path:'new/video',
-    component: NewVideoComponent
-  },*/
+ */
   {
     path: 'stream',
     component: StreamComponent
@@ -52,8 +51,9 @@ const appRoutes: Routes = [
     MessageModule,
     MessagesModule,
     InputMaskModule,
-    AngularFontAwesomeModule
-
+    AngularFontAwesomeModule,
+    ConfirmDialogModule,
+    GrowlModule
   ],
   providers: [VideosService , StreamService],
   bootstrap: [AppComponent],
