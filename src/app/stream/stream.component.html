@@ -3,8 +3,8 @@
   <ng-template pTemplate='caption'>
       <div style='text-align: right'>
         <i class='fa fa-search' style='margin:4px 4px 0 0'></i>
-        <input type="text" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
-        <button type='button' pButton icon='fa fa-plus' (click)='showDialog()' label='Add' ></button>
+        <input type="text" pInputText size="30" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        <button type='button' class="ui-button-success" pButton icon='fa fa-plus' (click)='showDialog()' label='Add' ></button>
       </div>
       <div style='text-align: left'>
 
@@ -137,8 +137,8 @@
       <!--pre>{{newStreamForm.value | json }} </pre-->
 
     <p-footer>
-        <button type="submit" pButton icon="pi pi-check" (click)="saveStream()" label="Yes"></button>
-        <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
+        <button type="submit" pButton class="ui-button-success" icon="pi pi-check" (click)="saveStream()" label="Yes"></button>
+        <button type="button" pButton class="ui-button-danger" icon="pi pi-close" (click)="display=false" label="No" ></button>
     </p-footer>
   </p-dialog>
 </form>
