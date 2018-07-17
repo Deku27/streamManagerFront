@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Stream } from '../../models/stream';
-import { StreamService } from '../../services.ts/stream.service';
+import { StreamService } from '../../services/stream.service';
 import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
 import { Video } from '../../models/video';
-import { VideosService } from '../../services.ts/videos.service';
+import { VideosService } from '../../services/videos.service';
 
 @Component({
   selector: 'app-stream',
