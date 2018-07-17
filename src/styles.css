@@ -1,1 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+body{
+  background-image: url('assets/images/grey.jpg');
+  overflow-x: hidden;
+}
+
+
+.ui-menubar,.ui-menu-child,.ui-menu {
+  background: #009DE0 !important;
+  color: white;
+}
+
+.ui-menuitem .ui-menuitem-link {
+  color:white !important;
+}
+
+.ui-fileupload-buttonbar > span{
+
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+}
+
+.ui-fileupload-buttonbar > button{
+
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+}
+
+
+td{
+  padding-bottom:20px !important;
+  padding-top:10px !important;
+}
+
+
