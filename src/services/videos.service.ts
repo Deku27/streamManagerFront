@@ -10,7 +10,7 @@ export class VideosService {
     }
     getVideos() {
         return this.http.get('http://localhost:8080/videos')
-            .pipe(map(res => res));
+            .pipe(map(res => <Video[]> res));
 
     }
 
@@ -25,6 +25,12 @@ export class VideosService {
           .pipe(map(res => res));
 
     }
+
+    deleteVideo(id: number) {
+      return this.http.delete('http://localhost:8080/video/' + id)
+      .pipe(map(res => res));
+    }
+
 
     uploadVideo(fileToUpload: File): Observable<string> {
       const endpoint = 'http://localhost:8080/uploadVideo';

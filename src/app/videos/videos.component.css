@@ -1,0 +1,28 @@
+label{
+  position: relative;
+  top:4px;
+}
+
+.ui-dialog {
+  width: auto !important;
+}
+.ui-fileupload-buttonbar{
+padding: 1em !important;
+}
+
+.ui-grid-row{
+margin-top: 10px;
+}
+
+.osc_csa_panel{
+margin-bottom: 10px;
+}
+
+.fa{
+  padding-right: 10px;
+  font-size: 1.2em;
+}
+td{
+  text-align: center;
+}
+

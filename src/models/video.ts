@@ -1,5 +1,6 @@
 export class Video {
 
+  idvideo: number;
   filename: string;
   description: string;
   color: boolean;

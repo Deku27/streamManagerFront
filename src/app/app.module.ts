@@ -18,12 +18,12 @@ import { StreamComponent } from './stream/stream.component';
 import { VideosService } from '../services/videos.service';
 import { StreamService } from '../services/stream.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { VideosComponent } from './videos/videos.component';
 const appRoutes: Routes = [
- /* {
-    path:'videos',
-    component: ListVideoComponent
+  {
+    path: 'videos',
+    component: VideosComponent
   },
- */
   {
     path: 'stream',
     component: StreamComponent
@@ -35,7 +35,7 @@ const appRoutes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [AppComponent, StreamComponent],
+  declarations: [AppComponent, StreamComponent, VideosComponent],
   imports: [
     HttpClientModule, RouterModule.forRoot(appRoutes), BrowserModule, BrowserAnimationsModule , ReactiveFormsModule,
     ButtonModule,

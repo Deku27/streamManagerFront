@@ -42,3 +42,8 @@ td{
 
 i:hover { cursor: pointer; text-decoration: underline; }
 
+.ui-fileupload-content{
+
+	border :1px solid #d4d4d4 !important;
+}
+
