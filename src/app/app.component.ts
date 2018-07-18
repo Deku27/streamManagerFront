@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
       },
       {
           label: 'Eit',
+          routerLink: '/eit'
           // icon: 'fa fa-info-square',
       },
       {

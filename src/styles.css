@@ -46,4 +46,14 @@ i:hover { cursor: pointer; text-decoration: underline; }
 
 	border :1px solid #d4d4d4 !important;
 }
+.ui-tabview-left>.ui-tabview-nav {
+  width:20% !important;
+}
+.ui-tabview-panels{
+  width:80% !important;
+}
+.ui-fieldset {
+  border: 1px solid #d4d4d4 !important;
+}
+
 
