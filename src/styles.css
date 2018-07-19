@@ -1,8 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
 
-body{
-  background-image: url('assets/images/grey.jpg');
+html{
+  background: url('assets/images/grey.jpeg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
   overflow-x: hidden;
 }
 
@@ -10,7 +15,7 @@ body{
   border: 0px solid #d4d4d4 !important;
 }
 .ui-menubar,.ui-menu-child,.ui-menu {
-  background: #009DE0 !important;
+  background: #2790b0 !important;
   color: white;
 }
 
@@ -43,17 +48,13 @@ td{
 i:hover { cursor: pointer; text-decoration: underline; }
 
 .ui-fileupload-content{
-
 	border :1px solid #d4d4d4 !important;
 }
 .ui-tabview-left>.ui-tabview-nav {
   width:20% !important;
 }
-.ui-tabview-panels{
-  width:80% !important;
-}
+
 .ui-fieldset {
   border: 1px solid #d4d4d4 !important;
 }
-
 

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-eit',
   templateUrl: './eit.component.html',
-  styleUrls: ['./eit.component.css']
+  styleUrls: ['./eit.component.css'],
+  // encapsulation: ViewEncapsulation.None,
 })
 export class EitComponent implements OnInit {
 
@@ -11,10 +12,15 @@ export class EitComponent implements OnInit {
   category: any;
   subCategory: any;
   csaRating: any;
+  customCsaRating: any;
   countries: any;
-  constructor() { }
-  ngOnInit() {
+  tags: any;
 
+  constructor() { }
+
+
+
+  ngOnInit() {
 
     this.lang = [
       { label: 'allemand', value: 'ger'},
@@ -77,7 +83,12 @@ export class EitComponent implements OnInit {
       { label: 'Pologne', value: 'POL'},
       { label: 'Royaume-Uni', value: 'GBR'},
       { label: 'Tunisie', value: 'TUN'},
-      { label: 'france', value: 'FRA'},
+      { label: 'France', value: 'FRA'},
+    ];
+
+    this.tags = [
+      { label: '0xAA - Barker , Start Over , See also' , value: '0xAA' },
+      { label: '0xAB - Interactive service' , value: '0xAB' }
     ];
   }
 
@@ -179,4 +190,24 @@ export class EitComponent implements OnInit {
     }
   }
 
+
+  changeRating(checked) {
+    if (checked) {
+      this.csaRating = [
+        {label: 'CSA1 (16)',  value: '16' },
+        {label: 'CSA2 (17)',  value: '17' },
+        {label: 'CSA3 (18)',  value: '18' },
+        {label: 'CSA4 (19)',  value: '19' },
+        {label: 'CSA5 (20)',  value: '20' },
+      ];
+    } else {
+      this.csaRating = [
+        {label: 'CSA1 (0)',  value: '0' },
+        {label: 'CSA2 (7)',  value: '7' },
+        {label: 'CSA3 (9)',  value: '9' },
+        {label: 'CSA4 (13)',  value: '13' },
+        {label: 'CSA5 (15)',  value: '15' },
+      ];
+    }
+  }
 }

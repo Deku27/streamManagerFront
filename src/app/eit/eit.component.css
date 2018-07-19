@@ -1,3 +1,53 @@
 .ui-grid-row{
   padding-top: 10px;
 }
+
+:host >>> .ui-widget-header {
+  background-color: #FFFFFF;
+  border: 0px solid #2790b0;
+
+}
+:host >>> .ui-widget-active {
+  background-color: #FFFFFF;
+
+}
+:host >>> .ui-tabview.ui-tabview-left>.ui-tabview-nav li {
+    border-right: 1px solid #d4d4d4;
+}
+:host >>> .ui-tabview.ui-tabview-left>.ui-tabview-nav li, .ui-tabview.ui-tabview-right>.ui-tabview-nav li{
+  margin-top:8px;
+}
+
+:host >>> .ui-tabview .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled):hover {
+  border-right: 5px solid #2790b0;
+}
+
+:host >>> .ui-state-active {
+  border-right: 5px solid #2790b0 ;
+}
+:host >>> .space{
+  margin-top: -30px;
+}
+:host >>>.ui-fieldset .ui-fieldset-legend-text{
+  font-weight: bold;
+  color:#2790b0;
+}
+
+:host >>> .ui-radiobutton-label{
+  margin-right: 10px;
+}
+
+:host >>> .ui-chkbox-label{
+  margin-right: 10px;
+}
+:host >>> .ui-tabview-panels{
+  border : 1px solid #d4d4d4;
+}
+:host >>> .ui-tabview-left>.ui-tabview-panels{
+  width: 80% !important;
+  border : 0px solid #d4d4d4 !important;
+}
+/*:host >>> .ui-tabview-panels:first-child{
+  width: 100% !important;
+}*/
+

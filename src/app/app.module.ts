@@ -10,7 +10,8 @@ import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule, FileUploadModule, InputTextModule, MenubarModule, MenuItemContent, CardModule,
-  DropdownModule, MessageModule, MessagesModule, InputMaskModule, ConfirmDialogModule, GrowlModule, TabViewModule, FieldsetModule} from 'primeng/primeng';
+  DropdownModule, MessageModule, MessagesModule, InputMaskModule, ConfirmDialogModule, GrowlModule,
+   TabViewModule, FieldsetModule, RadioButtonModule} from 'primeng/primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StreamComponent } from './stream/stream.component';
 import { VideosService } from '../services/videos.service';
@@ -58,7 +59,8 @@ const appRoutes: Routes = [
     ConfirmDialogModule,
     GrowlModule,
     TabViewModule,
-    FieldsetModule
+    FieldsetModule,
+    RadioButtonModule
   ],
   providers: [VideosService , StreamService],
   bootstrap: [AppComponent],

@@ -7,7 +7,7 @@
 .resize{
   position: relative;
   left:40px;
-  width: 80px;
+  width: 60px;
   height: auto;
 }
 #menuApp{
@@ -16,6 +16,18 @@ top:-28px;
 }
 .blue{
   height:10px;
-  background-color: #009DE0;
+  background-color: #2790b0;
+}
+:host >>> .ui-card-body{
+  height: auto;
+}
+.fixedFooter{
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+
 }
 
+:host >>> .fixedFooter> .ui-card .ui-widget .ui-widget-content .ui-corner-all{
+  height: 20px !important;
+}

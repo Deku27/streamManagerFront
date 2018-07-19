@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Video } from '../../models/video';
 import { VideosService } from '../../services/videos.service';
 import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
 import { Message } from '../../../node_modules/primeng/primeng';
 
+
 @Component({
   selector: 'app-videos',
   templateUrl: './videos.component.html',
-  styleUrls: ['./videos.component.css']
+  styleUrls: ['./videos.component.css'],
+
+  // encapsulation: ViewEncapsulation.None,
 })
 export class VideosComponent implements OnInit {
 
@@ -56,7 +59,7 @@ export class VideosComponent implements OnInit {
     let enabled = this.newVideoForm.getRawValue().enabled;
 
     let video: Video = new Video(filename, description, color, resolution, ocs, csa5, format, enabled);
-    this.videoService.saveVideo(video)
+  this.videoService.saveVideo(video)
       .subscribe(
         data => {
           this.reloadVideoTable();
