@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Eit } from '../../models/interfaces/eit.interface';
+import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'app-eit',
@@ -16,23 +18,84 @@ export class EitComponent implements OnInit {
   countries: any;
   tags: any;
 
-  constructor() { }
+  eit = new FormGroup({
+    eitPresentSection: new FormGroup({
+      eitEvents: new FormGroup({
+        SHORT_EVENT_DESCRIPTOR: new FormGroup({
+          event_name: new FormControl(''),
+          event_text: new FormControl(''),
+          event_lang: new FormControl('')
+        }),
+        EXTENDED_EVENT_DESCRIPTOR: new FormGroup({
+          text: new FormControl(''),
+          lang: new FormControl('')
+        }),
+        CONTENT_DESCRIPTOR: new FormGroup({
+          content_nibble_level_1: new FormControl(''),
+          content_nibble_level_2: new FormControl('')
+        }),
+        PARENTAL_RATING_DESCRIPTOR: new FormGroup({
+          country_code: new FormControl(''),
+          age: new FormControl('')
+        }),
 
+        COMPONENT_DESCRIPTOR: new FormGroup({
+          stream_content: new FormControl(''),
+          text: new FormControl(''),
+          lang: new FormControl('')
+        })
+      })
+    }),
+    eitFollowingSection: new FormGroup({
+      eitEvents: new FormGroup({
+        SHORT_EVENT_DESCRIPTOR: new FormGroup({
+          event_name: new FormControl(''),
+          event_text: new FormControl(''),
+          event_lang: new FormControl('')
+        }),
+        EXTENDED_EVENT_DESCRIPTOR: new FormGroup({
+          text: new FormControl(''),
+          lang: new FormControl('')
+        }),
+        CONTENT_DESCRIPTOR: new FormGroup({
+          content_nibble_level_1: new FormControl(''),
+          content_nibble_level_2: new FormControl('')
+        }),
+        PARENTAL_RATING_DESCRIPTOR: new FormGroup({
+          country_code: new FormControl(''),
+          age: new FormControl('')
+        }),
 
+        COMPONENT_DESCRIPTOR: new FormGroup({
+          stream_content: new FormControl(''),
+          text: new FormControl(''),
+          lang: new FormControl('')
+        })
+      })
+    })
+  });
+  form = new FormGroup({
+    name: new FormGroup({
+      first: new FormControl('Nancy'),
+      last: new FormControl('Drew')
+    }),
+    email: new FormControl()
+  });
 
-  ngOnInit() {
+  blockToShow = 1;
 
+  constructor() {
     this.lang = [
-      { label: 'allemand', value: 'ger'},
-      { label: 'anglais', value: 'eng'},
-      { label: 'breton', value: 'bre'},
-      { label: 'chinois', value: 'chi'},
-      { label: 'grec', value: 'gre'},
-      { label: 'hindi', value: 'hin'},
-      { label: 'italien', value: 'ita'},
-      { label: 'japonais', value: 'jpn'},
-      { label: 'néerlandais', value: 'dut'},
-      { label: 'russe', value: 'rus'}
+      { label: 'allemand', value: 'ger' },
+      { label: 'anglais', value: 'eng' },
+      { label: 'breton', value: 'bre' },
+      { label: 'chinois', value: 'chi' },
+      { label: 'grec', value: 'gre' },
+      { label: 'hindi', value: 'hin' },
+      { label: 'italien', value: 'ita' },
+      { label: 'japonais', value: 'jpn' },
+      { label: 'néerlandais', value: 'dut' },
+      { label: 'russe', value: 'rus' }
     ];
 
     this.category = [
@@ -43,54 +106,56 @@ export class EitComponent implements OnInit {
       { label: 'Journal, Documentaire', value: '0x2' },
       { label: 'Loisirs', value: '0xA' },
       { label: 'Musique, Ballet, Danse', value: '0x6' },
-      { label: 'Société, Politique, Economie', value: '0x8'} ,
+      { label: 'Société, Politique, Economie', value: '0x8' },
       { label: 'Sport', value: '0x4' },
       { label: 'Variété, débat', value: '0x3' },
       { label: 'undefined content', value: '0x0' }
     ];
 
     this.subCategory = [
-      {label: 'Beaux-Arts',  value: '0x02' },
-      {label: 'arts/culture (sans musique, général)',  value: '0x00' },
-      {label: 'film experimental',  value: '0x07' },
-      {label: 'lettres',  value: '0x05' },
-      {label: 'media',  value: '0x08' },
-      {label: 'nouvelles technologies',  value: '0x09' },
-      {label: 'religion',  value: '0x03' },
-      {label: 'théatre',  value: '0x01' }
+      { label: 'Beaux-Arts', value: '0x02' },
+      { label: 'arts/culture (sans musique, général)', value: '0x00' },
+      { label: 'film experimental', value: '0x07' },
+      { label: 'lettres', value: '0x05' },
+      { label: 'media', value: '0x08' },
+      { label: 'nouvelles technologies', value: '0x09' },
+      { label: 'religion', value: '0x03' },
+      { label: 'théatre', value: '0x01' }
     ];
 
     this.csaRating = [
-      {label: 'CSA1 (0)',  value: '0' },
-      {label: 'CSA2 (7)',  value: '7' },
-      {label: 'CSA3 (9)',  value: '9' },
-      {label: 'CSA4 (13)',  value: '13' },
-      {label: 'CSA5 (15)',  value: '15' },
+      { label: 'CSA1 (0)', value: '0' },
+      { label: 'CSA2 (7)', value: '7' },
+      { label: 'CSA3 (9)', value: '9' },
+      { label: 'CSA4 (13)', value: '13' },
+      { label: 'CSA5 (15)', value: '15' }
     ];
 
     this.countries = [
-      { label: 'Algérie', value: 'DZA'},
-      { label: 'Allemagne', value: 'DEU'},
-      { label: 'Argentine', value: 'ARG'},
-      { label: 'Belgique', value: 'BEL'},
-      { label: 'Canada', value: 'CAN'},
-      { label: 'Chine', value: 'CHN'},
-      { label: 'Espagne', value: 'ESP'},
-      { label: 'Etats-Unis', value: 'USA'},
-      { label: 'Italie', value: 'ITA'},
-      { label: 'Liban', value: 'LBN'},
-      { label: 'Maroc', value: 'MAR'},
-      { label: 'Pologne', value: 'POL'},
-      { label: 'Royaume-Uni', value: 'GBR'},
-      { label: 'Tunisie', value: 'TUN'},
-      { label: 'France', value: 'FRA'},
+      { label: 'Algérie', value: 'DZA' },
+      { label: 'Allemagne', value: 'DEU' },
+      { label: 'Argentine', value: 'ARG' },
+      { label: 'Belgique', value: 'BEL' },
+      { label: 'Canada', value: 'CAN' },
+      { label: 'Chine', value: 'CHN' },
+      { label: 'Espagne', value: 'ESP' },
+      { label: 'Etats-Unis', value: 'USA' },
+      { label: 'Italie', value: 'ITA' },
+      { label: 'Liban', value: 'LBN' },
+      { label: 'Maroc', value: 'MAR' },
+      { label: 'Pologne', value: 'POL' },
+      { label: 'Royaume-Uni', value: 'GBR' },
+      { label: 'Tunisie', value: 'TUN' },
+      { label: 'France', value: 'FRA' }
     ];
 
     this.tags = [
-      { label: '0xAA - Barker , Start Over , See also' , value: '0xAA' },
-      { label: '0xAB - Interactive service' , value: '0xAB' }
+      { label: '0xAA - Barker , Start Over , See also', value: '0xAA' },
+      { label: '0xAB - Interactive service', value: '0xAB' }
     ];
   }
+
+  ngOnInit() {}
 
 
   onChange(event) {
@@ -190,7 +255,6 @@ export class EitComponent implements OnInit {
     }
   }
 
-
   changeRating(checked) {
     if (checked) {
       this.csaRating = [
@@ -209,5 +273,9 @@ export class EitComponent implements OnInit {
         {label: 'CSA5 (15)',  value: '15' },
       ];
     }
+  }
+
+  changeDiv(divToChange){
+    this.blockToShow = divToChange;
   }
 }

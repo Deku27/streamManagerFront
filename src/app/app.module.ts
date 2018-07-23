@@ -19,6 +19,8 @@ import { StreamService } from '../services/stream.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { VideosComponent } from './videos/videos.component';
 import { EitComponent } from './eit/eit.component';
+
+
 const appRoutes: Routes = [
   {
     path: 'stream',
@@ -60,7 +62,7 @@ const appRoutes: Routes = [
     GrowlModule,
     TabViewModule,
     FieldsetModule,
-    RadioButtonModule
+    RadioButtonModule,
   ],
   providers: [VideosService , StreamService],
   bootstrap: [AppComponent],

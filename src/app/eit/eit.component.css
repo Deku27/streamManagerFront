@@ -1,53 +1,57 @@
 .ui-grid-row{
-  padding-top: 10px;
+  margin-top: 10px;
 }
+.navButtons{
+  margin-top: 10px;
+  text-align: left;
+}
+.navButtons > button {
+  padding:8px;
+  text-align: left;
+  font-weight: bold;
+}
+.navButtons > button:hover{
+  border-right: 5px solid #F44336 !important;
+  background-color: #e6e6e6;
+}
+.tabMenu{
+  width:20%;
+  display: inline-block;
 
+}
+.tabMenuContent{
+  margin-left:20px;
+  width:70%;
+  display: inline-block;
+  clear: both;
+}
 :host >>> .ui-widget-header {
   background-color: #FFFFFF;
   border: 0px solid #2790b0;
 
 }
-:host >>> .ui-widget-active {
-  background-color: #FFFFFF;
-
-}
 :host >>> .ui-tabview.ui-tabview-left>.ui-tabview-nav li {
-    border-right: 1px solid #d4d4d4;
-}
-:host >>> .ui-tabview.ui-tabview-left>.ui-tabview-nav li, .ui-tabview.ui-tabview-right>.ui-tabview-nav li{
-  margin-top:8px;
+  border-right: 1px solid #d4d4d4;
 }
 
-:host >>> .ui-tabview .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled):hover {
-  border-right: 5px solid #2790b0;
-}
-
-:host >>> .ui-state-active {
-  border-right: 5px solid #2790b0 ;
-}
-:host >>> .space{
-  margin-top: -30px;
-}
 :host >>>.ui-fieldset .ui-fieldset-legend-text{
   font-weight: bold;
   color:#2790b0;
 }
-
-:host >>> .ui-radiobutton-label{
-  margin-right: 10px;
-}
-
-:host >>> .ui-chkbox-label{
-  margin-right: 10px;
-}
 :host >>> .ui-tabview-panels{
   border : 1px solid #d4d4d4;
 }
-:host >>> .ui-tabview-left>.ui-tabview-panels{
-  width: 80% !important;
-  border : 0px solid #d4d4d4 !important;
+:host >>> .ui-fieldset{
+  padding-bottom: 0.8em;
 }
-/*:host >>> .ui-tabview-panels:first-child{
-  width: 100% !important;
-}*/
 
+.activeButton{
+  border-right: 5px solid #2790b0 !important;
+  background-color: #cad7dc;
+}
+:host>>> .ui-tabview.ui-tabview-top>.ui-tabview-nav{
+    padding: 0;
+}
+:host >>> .ui-tabview-title{
+  font-weight: bold;
+}
