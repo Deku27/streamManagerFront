@@ -21,6 +21,7 @@
       <th pResizableColumn width="4%">enabled</th>
       <th pResizableColumn>Description</th>
       <th pResizableColumn>status</th>
+      <th pResizableColumn width="4%">action</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-video let-columns="columns">
@@ -50,15 +51,20 @@
       </td>
       <td> {{ video.description}} </td>
       <td> {{ video.status}} </td>
+      <td>
+        <i class="fa fa-edit" (click) ='showDialog(video.idvideo)'></i>
+        <i class="fa fa-trash" style="color: #f44336;" (click) ='ConfirmDeleteVideo(video.idvideo)'></i>
+      </td>
     </tr>
   </ng-template>
   <ng-template pTemplate="summary" let-rowData> </ng-template>
 </p-table>
 
-<form [formGroup]="newVideoForm">
-  <p-dialog header="Create Video" [(visible)]="display" [modal]="true" [responsive]="true" [width]="700" [minWidth]="400" [minY]="70"
-    [maximizable]="true" [baseZIndex]="10000" [contentStyle]="{'overflow':'visible'}">
+<p-confirmDialog></p-confirmDialog>
 
+<form [formGroup]="newVideoForm">
+  <p-dialog header="Create / Edit Video" [(visible)]="display" [modal]="true" [responsive]="true" [width]="700" [minWidth]="400"
+    [minY]="70" [maximizable]="true" [baseZIndex]="10000" [contentStyle]="{'overflow':'visible'}">
 
     <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad">
 
@@ -122,27 +128,28 @@
           <p-checkbox label="Enabled" binary=true formControlName="enabled"></p-checkbox>
         </div>
       </div>
-
-      <p-fileUpload #uploadForm customUpload="true" (uploadHandler)="uploadVideo($event, uploadForm)" (onSelect)="onSelect($event)"
-        (onClear)="onClear()" (onRemove)="onRemove($event)" accept="image/*">
-        <ng-template pTemplate="content">
-          <div class="ui-grid-row">
-            <div class="ui-grid-col-12" *ngIf="uploded">
-              <p-message severity="success" text="Field uploded successfuly"></p-message>
+      <div *ngIf="dialogState === 'create'">
+        <p-fileUpload #uploadForm customUpload="true" (uploadHandler)="uploadVideo($event, uploadForm)" (onSelect)="changeFileName($event)"
+          (onClear)="clear()" (onRemove)="removeUploadedFile($event)" accept="image/*">
+          <ng-template pTemplate="content">
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-12" *ngIf="uploded">
+                <p-message severity="success" text="Field uploded successfuly"></p-message>
+              </div>
             </div>
-          </div>
 
-          <div class="ui-grid-row">
-            <div class="ui-grid-col-12" *ngIf="uploadError">
-              <p-message severity="error" text="Something went wrong !"></p-message>
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-12" *ngIf="uploadError">
+                <p-message severity="error" text="Something went wrong !"></p-message>
+              </div>
             </div>
-          </div>
-        </ng-template>
+          </ng-template>
 
-      </p-fileUpload>
+        </p-fileUpload>
+    </div>
     </div>
 
-    <pre>{{newVideoForm.value | json}} </pre>
+    <!--pre>{{newVideoForm.value | json}} </pre-->
 
     <p-footer>
 
