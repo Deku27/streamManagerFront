@@ -1,147 +1,158 @@
 <p-growl [(value)]="msgs"></p-growl>
-<p-table #dt [columns]="videosTableCols" [value]="videos" [paginator]="true" [rows]="7" [resizableColumns]="true" >
+<p-table #dt [columns]="videosTableCols" [value]="videos" [paginator]="true" [rows]="7" [resizableColumns]="true">
   <ng-template pTemplate="caption">
     <div style='text-align: right'>
       <i class='fa fa-search' style='margin:4px 4px 0 0'></i>
       <input type="text" pInputText size="30" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
-      <button type='button' class="ui-button-success" pButton icon='fa fa-plus' (click)='showDialog()' label='Add' ></button>
+      <button type='button' class="ui-button-success" pButton icon='fa fa-plus' (click)='showDialog()' label='Add'></button>
     </div>
   </ng-template>
-<ng-template pTemplate="header" let-columns>
+  <ng-template pTemplate="header" let-columns>
     <tr>
-      <th pResizableColumn >Name</th>
-      <th pResizableColumn width="4.1%" >Audio</th>
-      <th pResizableColumn width="5%" >subtitles</th>
-      <th pResizableColumn >pmt</th>
+      <th pResizableColumn>Name</th>
+      <th pResizableColumn width="4.1%">Audio</th>
+      <th pResizableColumn width="5%">subtitles</th>
+      <th pResizableColumn>pmt</th>
       <th pResizableColumn width="3%">color</th>
-      <th pResizableColumn width="5%" >resolution</th>
-      <th pResizableColumn width="3%" >ocs</th>
-      <th pResizableColumn width="3%" >csa5</th>
-      <th pResizableColumn width="4%" >format</th>
-      <th pResizableColumn width="4%" >enabled</th>
-      <th pResizableColumn >Description</th>
-      <th pResizableColumn >status</th>
+      <th pResizableColumn width="5%">resolution</th>
+      <th pResizableColumn width="3%">ocs</th>
+      <th pResizableColumn width="3%">csa5</th>
+      <th pResizableColumn width="4%">format</th>
+      <th pResizableColumn width="4%">enabled</th>
+      <th pResizableColumn>Description</th>
+      <th pResizableColumn>status</th>
     </tr>
-</ng-template>
-<ng-template pTemplate="body" let-video let-columns="columns">
+  </ng-template>
+  <ng-template pTemplate="body" let-video let-columns="columns">
     <tr>
 
       <td> {{ video.filename}} </td>
       <td> {{ video.audio}} </td>
       <td> {{ video.subtitle}} </td>
       <td> {{ video.pmt}} </td>
-      <td><i *ngIf="!video.color" class="fa fa-times-circle"></i> <i *ngIf="video.color" class="fa fa-check" style="color:#4CAF50"></i ></td>
+      <td>
+        <i *ngIf="!video.color" class="fa fa-times-circle"></i>
+        <i *ngIf="video.color" class="fa fa-check" style="color:#4CAF50"></i>
+      </td>
       <td> {{ video.resolution}} </td>
-      <td><i *ngIf="!video.ocs" class="fa fa-times-circle"></i> <i *ngIf="video.ocs" class="fa fa-check" style="color:#4CAF50"></i > </td>
-      <td><i *ngIf="!video.csa5" class="fa fa-times-circle"></i> <i *ngIf="video.csa5" class="fa fa-check" style="color:#4CAF50"></i > </td>
+      <td>
+        <i *ngIf="!video.ocs" class="fa fa-times-circle"></i>
+        <i *ngIf="video.ocs" class="fa fa-check" style="color:#4CAF50"></i>
+      </td>
+      <td>
+        <i *ngIf="!video.csa5" class="fa fa-times-circle"></i>
+        <i *ngIf="video.csa5" class="fa fa-check" style="color:#4CAF50"></i>
+      </td>
       <td> {{ video.format}} </td>
-      <td><i *ngIf="!video.enabled" class="fa fa-times-circle"></i> <i *ngIf="video.enabled" class="fa fa-check" style="color:#4CAF50"></i > </td>
+      <td>
+        <i *ngIf="!video.enabled" class="fa fa-times-circle"></i>
+        <i *ngIf="video.enabled" class="fa fa-check" style="color:#4CAF50"></i>
+      </td>
       <td> {{ video.description}} </td>
       <td> {{ video.status}} </td>
     </tr>
-</ng-template>
-<ng-template pTemplate="summary" let-rowData > </ng-template>
+  </ng-template>
+  <ng-template pTemplate="summary" let-rowData> </ng-template>
 </p-table>
 
-<form [formGroup] ="newVideoForm" (ngSubmit)="saveVideo()">
+<form [formGroup]="newVideoForm">
   <p-dialog header="Create Video" [(visible)]="display" [modal]="true" [responsive]="true" [width]="700" [minWidth]="400" [minY]="70"
-          [maximizable]="true" [baseZIndex]="10000" [contentStyle]="{'overflow':'visible'}">
+    [maximizable]="true" [baseZIndex]="10000" [contentStyle]="{'overflow':'visible'}">
 
 
-    <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad" >
+    <div class="ui-grid ui-grid-responsive ui-fluid ui-grid-pad">
 
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-2">
-                <label for="name">Name:</label>
-            </div>
-            <div class="ui-grid-col-10">
-                <input pInputText id="name"  required  type="text" formControlName="filename" />
-            </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          <label for="name">Name:</label>
         </div>
-
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-9 ui-md-offset-2" *ngIf="newVideoForm.controls['filename'].invalid && (newVideoForm.controls['filename'].dirty || newVideoForm.controls['filename'].touched)">
-                <p-message severity="error" text="Field is required"></p-message>
-              </div>
+        <div class="ui-grid-col-10">
+          <input pInputText id="name" required type="text" formControlName="filename" />
         </div>
-
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-2">
-                <label for="description">Description*:</label>
-            </div>
-            <div class="ui-grid-col-10">
-                <input pInputText id="description" formControlName="description"  type="text"/>
-            </div>
-        </div>
-
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-2">
-                <label for="color">Color:</label>
-            </div>
-            <div class="ui-grid-col-9">
-                <p-checkbox  binary="true" formControlName="color"></p-checkbox>
-            </div>
-        </div>
-
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-2">
-                <label for="resolution">Resolution:</label>
-            </div>
-            <div class="ui-grid-col-4">
-                <input pInputText id="resolution" formControlName="resolution"value="HD" type="text" />
-            </div>
-            <div class="ui-grid-col-2">
-                <label for="format">Format:</label>
-            </div>
-            <div class="ui-grid-col-4">
-                <input pInputText id="format" formControlName="format" value="16/9" type="text" />
-            </div>
-        </div>
-
-
-        <div class="ui-grid-row osc_csa_panel" >
-            <div class="ui-g-2">
-                <p-checkbox label="OCS" binary=true  formControlName="ocs"></p-checkbox>
-            </div>
-            <div class="ui-g-2">
-                <p-checkbox label="CSA5" binary=true  formControlName="csa5"  ></p-checkbox>
-            </div>
-            <div class="ui-g-2">
-              <p-checkbox       label="Enabled" binary=true formControlName="enabled"   ></p-checkbox>
-            </div>
-        </div>
-
-        <p-fileUpload #uploadForm customUpload="true" (uploadHandler)="uploadVideo($event, uploadForm)" (onSelect)="onSelect($event)"
-          (onClear) ="onClear()" (onRemove)= "onRemove($event)" accept="image/*">
-              <ng-template pTemplate="content">
-                  <div class="ui-grid-row">
-                      <div class="ui-grid-col-12" *ngIf="uploded">
-                          <p-message severity="success" text="Field uploded successfuly"></p-message>
-                      </div>
-                  </div>
-
-                  <div class="ui-grid-row">
-                      <div class="ui-grid-col-12" *ngIf="uploadError">
-                          <p-message severity="error" text="Something went wrong !"></p-message>
-                      </div>
-                  </div>
-              </ng-template>
-        </p-fileUpload>
       </div>
 
-          <pre>{{newVideoForm.value | json}} </pre>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-9 ui-md-offset-2" *ngIf="newVideoForm.controls['filename'].invalid && (newVideoForm.controls['filename'].dirty || newVideoForm.controls['filename'].touched)">
+          <p-message severity="error" text="Field is required"></p-message>
+        </div>
+      </div>
 
-  <p-footer>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          <label for="description">Description*:</label>
+        </div>
+        <div class="ui-grid-col-10">
+          <input pInputText id="description" formControlName="description" type="text" />
+        </div>
+      </div>
 
-    <button pButton type="button" class="ui-button-danger"  icon="pi pi-close" label="No"></button>
-    <button pButton type="submit" class="ui-button-success"icon="pi pi-check" [disabled]="!newVideoForm.valid"
-       label="Yes">
-    </button>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          <label for="color">Color:</label>
+        </div>
+        <div class="ui-grid-col-9">
+          <p-checkbox binary="true" formControlName="color"></p-checkbox>
+        </div>
+      </div>
 
-  </p-footer>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          <label for="resolution">Resolution:</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input pInputText id="resolution" formControlName="resolution" value="HD" type="text" />
+        </div>
+        <div class="ui-grid-col-2">
+          <label for="format">Format:</label>
+        </div>
+        <div class="ui-grid-col-4">
+          <input pInputText id="format" formControlName="format" value="16/9" type="text" />
+        </div>
+      </div>
+
+
+      <div class="ui-grid-row osc_csa_panel">
+        <div class="ui-g-2">
+          <p-checkbox label="OCS" binary=true formControlName="ocs"></p-checkbox>
+        </div>
+        <div class="ui-g-2">
+          <p-checkbox label="CSA5" binary=true formControlName="csa5"></p-checkbox>
+        </div>
+        <div class="ui-g-2">
+          <p-checkbox label="Enabled" binary=true formControlName="enabled"></p-checkbox>
+        </div>
+      </div>
+
+      <p-fileUpload #uploadForm customUpload="true" (uploadHandler)="uploadVideo($event, uploadForm)" (onSelect)="onSelect($event)"
+        (onClear)="onClear()" (onRemove)="onRemove($event)" accept="image/*">
+        <ng-template pTemplate="content">
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-12" *ngIf="uploded">
+              <p-message severity="success" text="Field uploded successfuly"></p-message>
+            </div>
+          </div>
+
+          <div class="ui-grid-row">
+            <div class="ui-grid-col-12" *ngIf="uploadError">
+              <p-message severity="error" text="Something went wrong !"></p-message>
+            </div>
+          </div>
+        </ng-template>
+
+      </p-fileUpload>
+    </div>
+
+    <pre>{{newVideoForm.value | json}} </pre>
+
+    <p-footer>
+
+      <button pButton type="button" class="ui-button-danger" icon="pi pi-close" label="No"></button>
+      <button pButton type="submit" class="ui-button-success" icon="pi pi-check" [disabled]="!newVideoForm.valid" label="Yes" (click)="saveVideo()">
+      </button>
+
+    </p-footer>
 
 
 
-</p-dialog>
+  </p-dialog>
 </form>
-

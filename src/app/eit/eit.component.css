@@ -55,3 +55,17 @@
 :host >>> .ui-tabview-title{
   font-weight: bold;
 }
+pre{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.twocolumns{
+  padding:10px;
+  width:80%;
+  -moz-column-count: 2;
+  -moz-column-gap: 10px;
+  -webkit-column-count: 2;
+  -webkit-column-gap: 10px;
+  column-count: 2;
+  column-gap: 10px;
+}

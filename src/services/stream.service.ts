@@ -13,12 +13,19 @@ export class StreamService {
       return this.http.get('http://localhost:8080/eit')
            .pipe(map(res => <Stream[]> res));
   }
-
+  getStreamByID(id: number){
+      return this.http.get('http://localhost:8080/eit/' + id)
+            .pipe(map(res => <Stream> res));
+  }
   saveStream(stream: Stream) {
     return this.http.post('http://localhost:8080/eit', stream)
           .pipe(map(res => res));
   }
 
+  editStream(id: number, stream: Stream) {
+    return this.http.put('http://localhost:8080/eit/' + id , stream)
+      .pipe(map(res => res));
+  }
   deleteStream(id: number) {
     return this.http.delete('http://localhost:8080/eit/' + id)
       .pipe(map(res => res));

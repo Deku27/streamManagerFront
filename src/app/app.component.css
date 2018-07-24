@@ -1,33 +1,64 @@
-
 #mybar{
   margin-top: -10px;
   margin-left: -10px;
   margin-right: -10px;
+  margin-bottom: 50px;
 }
 .resize{
   position: relative;
   left:40px;
-  width: 60px;
+  width: 220px;
   height: auto;
-}
-#menuApp{
-position: relative;
-top:-28px;
 }
 .blue{
   height:10px;
   background-color: #2790b0;
 }
+#menuApp{
+position: relative;
+top:-28px;
+height:auto;
+padding: 0px;
+color: white;
+font-weight: bold;
+font-size: 1.1em;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Segoe UI Symbol";
+}
+#menuApp > ul {
+  text-align: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #2790b0;
+}
+
+#menuApp >ul>li {
+  width: 33.2%;
+  float: left;
+  border-right:1px solid #bbb;
+}
+
+#menuApp >ul>li:last-child {
+  border-right: none;
+}
+
+#menuApp >ul>li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#menuApp >ul>li a:hover:not(.active) {
+  background-color: #2790b0;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
 :host >>> .ui-card-body{
   height: auto;
-}
-.fixedFooter{
-    position: fixed;
-    bottom: 0;
-    text-align: center;
-
-}
-
-:host >>> .fixedFooter> .ui-card .ui-widget .ui-widget-content .ui-corner-all{
-  height: 20px !important;
 }

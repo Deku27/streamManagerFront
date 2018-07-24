@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Eit } from '../../models/interfaces/eit.interface';
 import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
 
 @Component({

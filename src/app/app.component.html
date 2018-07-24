@@ -1,21 +1,30 @@
 <div id="mybar">
   <div class="blue"></div>
   <p-card>
-      <img src="assets\images\LOGO-NEOSOFT.png" alt="image" class="resize">
+    <img src="assets\images\logo2.png" alt="Logo" class="resize">
   </p-card>
-  <div class="ui-grid-row">
-      <div class="ui-md-offset-2 ui-md-8" id="menuApp">
-          <p-menubar [model]="items" styleClass="menubar"></p-menubar>
-      </div>
+  <div class="ui-md-offset-4 ui-g-4" id="menuApp">
+    <ul>
+      <li>
+        <a routerLink="/stream" routerLinkActive="active">Table Stream</a>
+      </li>
+      <li>
+        <a routerLink="/eit" routerLinkActive="active">Eit</a>
+      </li>
+      <li>
+        <a routerLink="/videos" routerLinkActive="active">Videos </a>
+      </li>
+    </ul>
   </div>
-
+</div>
+<div class="ui-grid-row" style="margin-top: 20px;">
   <p-card>
-    <router-outlet ></router-outlet>
+    <router-outlet></router-outlet>
   </p-card>
+</div>
 
-    <div class="fixedFooter ui-md-offset-1 ui-md-10 "  >
-    <p-card >
-            <p>Néo-soft Copyright all rights reserved - 2018 -</p>
-    </p-card>
-  </div>
+<div class="fixedFooter ui-md-offset-1 ui-md-10 ">
+  <p-card>
+    <p>Néo-soft Copyright all rights reserved - 2018 -</p>
+  </p-card>
 </div>
