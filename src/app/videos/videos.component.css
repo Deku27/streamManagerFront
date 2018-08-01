@@ -31,3 +31,12 @@ td{
 li{
   margin-top: 0px !important;
 }*/
+
+:host >>> .ui-messages-error > ul li {
+  padding-left: 1em;
+}
+
+:host >>> .ui-messages-error > span {
+  display: none;
+}
+

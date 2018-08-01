@@ -1,4 +1,4 @@
-<p-growl [(value)]="msgs"></p-growl>
+<p-toast key="topLeftMessages" ></p-toast>
 <p-table #dt [columns]='streamTableCols' [value]='streams' [paginator]='true' [rows]='7' [resizableColumns]='true'>
   <ng-template pTemplate='caption'>
     <div style='text-align: right'>
@@ -27,6 +27,7 @@
       <th pResizableColumn width='8%'>action</th>
     </tr>
   </ng-template>
+
   <ng-template pTemplate='body' let-stream let-columns='columns'>
     <tr>
       <td></td>
@@ -50,10 +51,7 @@
     </tr>
   </ng-template>
 
-  <ng-template pTemplate='summary' let-rowData>
-
-  </ng-template>
-
+  <ng-template pTemplate='summary' let-rowData></ng-template>
 </p-table>
 
 <p-confirmDialog></p-confirmDialog>
@@ -67,23 +65,25 @@
           <label for="lcn">lcn:</label>
         </div>
         <div class="ui-grid-col-3">
-          <input pInputText id="lcn" type="text" formControlName="lcn" />
+          <input pInputText id="lcn" type="text" placeholder="out of [800, 899]"
+            formControlName="lcn" />
         </div>
 
         <div class="ui-grid-col-2  ui-md-offset-1">
           <label for="usi">Usi:</label>
         </div>
         <div class="ui-grid-col-3">
-          <input pInputText id="usi" type="text" formControlName="usi" />
+          <input pInputText id="usi" type="text" placeholder="out of [2501, 2599]"
+            formControlName="usi" />
         </div>
+        
       </div>
-
       <div class="ui-grid-row">
         <div class="ui-grid-col-2">
           <label for="name">Name:</label>
-        </div>
-        <div class="ui-grid-col-9">
-          <input pInputText id="name" type="text" formControlName="name" />
+          </div>
+          <div class="ui-grid-col-9">
+          <input pInputText id="name" type="text" formControlName="name" placeholder="HD/SD CSAx name" />
         </div>
       </div>
 
@@ -92,11 +92,9 @@
           <label for="description">Description:</label>
         </div>
         <div class="ui-grid-col-9">
-          <input pInputText id="description" type="text" formControlName="description" />
+          <textarea pInputTextarea  id="description" formControlName="description" rows="3" placeholder="Description"></textarea>
         </div>
       </div>
-
-
       <div class="ui-grid-row">
         <div class="ui-grid-col-2">
           <label for="videoFile">video File:</label>
@@ -112,7 +110,7 @@
           <label for="tsid_sid_onid">tsid:sid:onid:</label>
         </div>
         <div class="ui-grid-col-5">
-          <p-inputMask type="text" id="tsid_sid_onid" mask="99:99:999" formControlName="tsid_sid_onid"></p-inputMask>
+          <p-inputMask type="text" id="tsid_sid_onid" mask="99:99:999" formControlName="tsid_sid_onid" placeholder="xx:xx:167 "></p-inputMask>
         </div>
         <div class="ui-grid-col-2 ui-md-offset-1">
           <label>enabled:</label>
@@ -127,19 +125,34 @@
           <label for="urlAdress">Url adress:</label>
         </div>
         <div class="ui-grid-col-5">
-          <input pInputText id="urlAdress" type="text" formControlName="address" />
+          <input pInputText id="urlAdress" type="text" formControlName="address" placeholder="out of [232.0.6.1, 232.0.6.99]"
+          required 
+           />
         </div>
-
         <div class="ui-grid-col-2">
           <label for="urlPort">Url port:</label>
         </div>
         <div class="ui-grid-col-2">
-          <input pInputText id="urlPort" type="text" formControlName="port" />
+          <input pInputText id="urlPort" type="text"  placeholder="8200"
+          formControlName="port"/>
         </div>
       </div>
     </div>
+    <div class="ui-grid-row">
+      <button pButton type="button" label="Service plan..." class="ui-button-info" ></button>
+    </div>
     <!--pre>{{newStreamForm.value | json }} </pre-->
+    <!--div class="ui-grid-row validatingErros" >
+      <ul>
+        <li *ngFor="let validationErrorMsg of validationErrorMsgs">{{validationErrorMsg.content}}</li>
+      </ul>
+    </div-->
 
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-12">
+          <p-messages [(value)]="validationErrors"></p-messages>
+        </div>
+      </div>
     <p-footer>
       <button type="submit" pButton class="ui-button-success" icon="pi pi-check" (click)="saveStream()" label="Yes"></button>
       <button type="button" pButton class="ui-button-danger" icon="pi pi-close" (click)="display=false" label="No"></button>

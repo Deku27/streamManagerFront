@@ -8,3 +8,19 @@
 td{
   text-align: center;
 }
+
+.validatingErros {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1; 
+}
+
+
+:host >>> .ui-messages-error > ul li{
+  padding: 0.3em;
+  width: 50%;
+  float: left;
+}
+:host >>> .ui-messages-error > span {
+  display: none;
+}
