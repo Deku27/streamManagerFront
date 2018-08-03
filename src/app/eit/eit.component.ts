@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
+import { FormGroup, FormControl,Validators } from '../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'app-eit',
@@ -16,6 +16,32 @@ export class EitComponent implements OnInit {
   customCsaRating: any;
   countries: any;
   tags: any;
+
+  /*jsonshit = {"eitGeneral":{"version":"1.10","target":"-1"},"eitPresentSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":
+          {"event_name":  this.test ,"event_text":"","event_lang":"fre"},"EXTENDED_EVENT_DESCRIPTOR":
+          {"text":"","lang":"fre","items":[]},"CONTENT_DESCRIPTOR":[],"PARENTAL_RATING_DESCRIPTOR":
+          {"country_code":"FRA","age":0},"PRIVATE_DESCRIPTOR":[{"tag":"0xAA","token":""}],"COMPONENT_DESCRIPTOR":
+          [{"stream_content":"0x05","component_type":"0x01","set_component_tag":46,"text":"aspect ratio","lang":"fre"},
+          {"stream_content":"0x06","component_type":"0x03","set_component_tag":46,"text":"audio","lang":"fre"},
+          {"stream_content":"0x03","component_type":"0x10","set_component_tag":46,"text":"subtitle","lang":"fre"}]}]},"eitFollowingSection":
+          {"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":
+          {"event_name":"","event_text":"","event_lang":"fre"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"","lang":"fre","items":[]}
+          ,"CONTENT_DESCRIPTOR":[],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"FRA","age":0},"PRIVATE_DESCRIPTOR":[{"tag":"0xAA","token":""}],
+          "COMPONENT_DESCRIPTOR":[{"stream_content":"0x05","component_type":"0x01","set_component_tag":46,"text":"aspect ratio","lang":"fre"},
+          {"stream_content":"0x06","component_type":"0x03","set_component_tag":46,"text":"audio","lang":"fre"},
+          {"stream_content":"0x03","component_type":"0x10","set_component_tag":46,"text":"subtitle","lang":"fre"}]}]}};*/
+
+  jsonRegex ='{"eitGeneral":{"version":"1.10","target":"-1"},"eitPresentSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":{"event_name":"[a-zA-Z0-9_ ]*","event_text":"[a-zA-Z0-9_ ]*","event_lang":"[a-zA-Z0-9_ ]*"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*","items":\\[\\]},"CONTENT_DESCRIPTOR":\\[({"content_nibble_level_1":"[a-zA-Z0-9_ ]*","content_nibble_level_2":"[a-zA-Z0-9_ ]*"})?\\],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"[a-zA-Z0-9_ ]*","age":[0-9]*},"PRIVATE_DESCRIPTOR":\\[({"tag":"[a-zA-Z0-9_ ]*","token":"[a-zA-Z0-9_ ]*"})?\\],"COMPONENT_DESCRIPTOR":[{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"}]}]},"eitFollowingSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":{"event_name":"[a-zA-Z0-9_ ]*","event_text":"[a-zA-Z0-9_ ]*","event_lang":"[a-zA-Z0-9_ ]*"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*","items":\\[\\]},"CONTENT_DESCRIPTOR":\\[({"content_nibble_level_1":"[a-zA-Z0-9_ ]*","content_nibble_level_2":"[a-zA-Z0-9_ ]*"})?\\],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"[a-zA-Z0-9_ ]*","age":[0-9]*},"PRIVATE_DESCRIPTOR":\\[({"tag":"[a-zA-Z0-9_ ]*","token":"[a-zA-Z0-9_ ]*"})?\\],"COMPONENT_DESCRIPTOR":[{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"}]}]}}';
+ 
+  jsonForm = new FormGroup({
+    jsonTextArea: new FormControl('',Validators.pattern(this.jsonRegex))
+  });
+
+  get jsonTextArea() {
+    return this.jsonForm.get('jsonTextArea');
+  }
+  
+  
 
   eit = new FormGroup({
     eitPresentSection: new FormGroup({
@@ -73,13 +99,7 @@ export class EitComponent implements OnInit {
       })
     })
   });
-  form = new FormGroup({
-    name: new FormGroup({
-      first: new FormControl('Nancy'),
-      last: new FormControl('Drew')
-    }),
-    email: new FormControl()
-  });
+
 
   blockToShow = 1;
 
@@ -277,4 +297,11 @@ export class EitComponent implements OnInit {
   changeDiv(divToChange){
     this.blockToShow = divToChange;
   }
+
+  showJson(){
+    let test= this.eit.value;
+    console.log(test);
+    this.jsonForm.patchValue({ jsonTextArea: '{"eitGeneral":{"version":"1.10","target":"-1"},"eitPresentSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":{"event_name":"sqdqsd","event_text":"sqdqsd","event_lang":"sqdqsd"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"sqdqsd","lang":"sqdqsd","items":[]},"CONTENT_DESCRIPTOR":[{"content_nibble_level_1":"dsqsd","content_nibble_level_2":"qsdqs"}],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"sdq","age":0},"PRIVATE_DESCRIPTOR":[{"tag":"sqd","token":"sqd"}],"COMPONENT_DESCRIPTOR":[{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"},{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"},{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"}]}]},"eitFollowingSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":{"event_name":"sqdqsd","event_text":"sqdqsd","event_lang":"sqdqsd"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"sqdqsd","lang":"sqdqsd","items":[]},"CONTENT_DESCRIPTOR":[{"content_nibble_level_1":"dsqsd","content_nibble_level_2":"qsdqs"}],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"sdq","age":0},"PRIVATE_DESCRIPTOR":[{"tag":"sqd","token":"sqd"}],"COMPONENT_DESCRIPTOR":[{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"},{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"},{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"}]}]}}' });
+  }
+  
 }

@@ -374,46 +374,33 @@
     </p-tabPanel>
 
     <p-tabPanel header="Json">
-      <div class="ui-grid-row">
-        <pre contenteditable="true">{{eit.value | json }}</pre>
-      </div>
+        <div class="ui-g-12">
+            
+                <button pButton type="button" label="Show Json" class="ui-button-danger" (click)='showJson()'></button>
+                <button pButton type="button" label="Import Json" class="ui-button-warning"></button>
+                <button pButton type="button" label="Pretty Json" class="ui-button-success"></button>
+        </div>
+        <div class="ui-grid-row">
+            <form [formGroup]="jsonForm">
+                <div class="ui-grid ui-fluid" spellcheck="false">
+                    <textarea pInputTextarea formControlName="jsonTextArea"  rows="10"></textarea>
+                </div>          
+            </form>
+    
+            <div *ngIf="jsonTextArea.errors?.pattern">
+                    User name not valid.
+            </div>  
+        </div>
+        
+    
+
+    <hr>
+    <div class="ui-grid-row">
+    <!--pre contenteditable="true">{{ eit.value | json }}</pre-->
+    <!--ngx-json-viewer [json]="jsonshit"></ngx-json-viewer-->
+    </div>
+
     </p-tabPanel>
 
-  </p-tabView>
-
-
-
-
-
-
-
-
-  <!--form [formGroup]="eit">
-    <div formGroupName ="eitPresentSection">
-      <div formGroupName="eitEvents">
-        <div formGroupName="SHORT_EVENT_DESCRIPTOR">
-          <div>
-          </div>
-            <input formControlName="event_name" placeholder="First name">
-            <div>
-              <label for="sdsq">sdsqd</label>
-            </div>
-            <div>
-              <input formControlName="event_text" placeholder="Last name">
-            </div>
-            <div formGroupName="EXTENDED_EVENT_DESCRIPTOR">
-                <input formControlName="text" placeholder="First name">
-            </div>
-        </div>
-      </div>
-
-    </div>
-    </form>
-
-
-
-    <code>
-      <pre contenteditable="true" style="font-size: 20px;">
-        {{ eit.value |  json }}
-      </pre>
-    </code-->
+</p-tabView>
+        

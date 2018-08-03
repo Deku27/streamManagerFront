@@ -69,3 +69,12 @@ pre{
   column-count: 2;
   column-gap: 10px;
 }
+
+:host >>> .segment-key{
+  font-weight: bold;
+  font-size: 1.2em;
+}
+:host >>> .segment-value{
+  font-weight: bold;
+  font-size: 1.2em; 
+} 

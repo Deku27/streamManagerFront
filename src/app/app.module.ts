@@ -20,6 +20,7 @@ import { StreamService } from '../services/stream.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { VideosComponent } from './videos/videos.component';
 import { EitComponent } from './eit/eit.component';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 
 const appRoutes: Routes = [
@@ -49,7 +50,7 @@ const appRoutes: Routes = [
     DialogModule,
     InputTextModule,
     CheckboxModule,
-    FileUploadModule,
+    FileUploadModule,  
     TableModule,
     MenubarModule,
     CardModule,
@@ -65,7 +66,8 @@ const appRoutes: Routes = [
     FieldsetModule,
     RadioButtonModule,
     InputTextareaModule,
-    ToastModule
+    ToastModule,
+    NgxJsonViewerModule,
   ],
   providers: [VideosService , StreamService],
   bootstrap: [AppComponent],
