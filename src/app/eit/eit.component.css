@@ -78,3 +78,19 @@ pre{
   font-weight: bold;
   font-size: 1.2em; 
 } 
+
+.jsonError{
+  background-color:#F8B7BD;
+  font-weight: bold;
+  padding: 1.5em;
+}
+#showJsonButton{
+  background-color: #2790b0 !important ;
+  border-color: #2790b0 !important;
+  margin-right:1.2em;
+}
+
+#importJsonButton{
+ 
+  margin-right:1.2em;
+}

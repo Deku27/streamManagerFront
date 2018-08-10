@@ -11,7 +11,7 @@ import {DialogModule} from 'primeng/dialog';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule, FileUploadModule, InputTextModule, MenubarModule, MenuItemContent, CardModule,
   DropdownModule, MessageModule, MessagesModule, InputMaskModule, ConfirmDialogModule, GrowlModule,
-   TabViewModule, FieldsetModule, RadioButtonModule, InputTextareaModule} from 'primeng/primeng';
+   TabViewModule, FieldsetModule, RadioButtonModule, InputTextareaModule, ToggleButtonModule} from 'primeng/primeng';
 import {ToastModule} from 'primeng/toast';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StreamComponent } from './stream/stream.component';
@@ -68,6 +68,7 @@ const appRoutes: Routes = [
     InputTextareaModule,
     ToastModule,
     NgxJsonViewerModule,
+    ToggleButtonModule
   ],
   providers: [VideosService , StreamService],
   bootstrap: [AppComponent],

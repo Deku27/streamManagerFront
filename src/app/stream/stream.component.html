@@ -1,4 +1,6 @@
 <p-toast key="topLeftMessages" ></p-toast>
+
+<p-toast key="addStreamMsg"></p-toast>
 <p-table #dt [columns]='streamTableCols' [value]='streams' [paginator]='true' [rows]='7' [resizableColumns]='true'>
   <ng-template pTemplate='caption'>
     <div style='text-align: right'>
@@ -138,9 +140,9 @@
         </div>
       </div>
     </div>
-    <div class="ui-grid-row">
+    <!--div class="ui-grid-row">
       <button pButton type="button" label="Service plan..." class="ui-button-info" ></button>
-    </div>
+    </div-->
     <!--pre>{{newStreamForm.value | json }} </pre-->
     <!--div class="ui-grid-row validatingErros" >
       <ul>
@@ -148,14 +150,14 @@
       </ul>
     </div-->
 
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="validatingErrosBlock">
         <div class="ui-grid-col-12">
           <p-messages [(value)]="validationErrors"></p-messages>
         </div>
       </div>
     <p-footer>
-      <button type="submit" pButton class="ui-button-success" icon="pi pi-check" (click)="saveStream()" label="Yes"></button>
-      <button type="button" pButton class="ui-button-danger" icon="pi pi-close" (click)="display=false" label="No"></button>
+      <button type="button" pButton class="ui-button-danger" icon="fa fa-close" (click)="display=false" label="Cancel"></button>
+      <button type="submit" pButton class="ui-button-success" icon="pi pi-check" (click)="saveStream()" label="Save"></button>
     </p-footer>
   </p-dialog>
 </form>

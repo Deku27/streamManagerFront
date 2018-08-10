@@ -16,32 +16,8 @@ export class EitComponent implements OnInit {
   customCsaRating: any;
   countries: any;
   tags: any;
-
-  /*jsonshit = {"eitGeneral":{"version":"1.10","target":"-1"},"eitPresentSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":
-          {"event_name":  this.test ,"event_text":"","event_lang":"fre"},"EXTENDED_EVENT_DESCRIPTOR":
-          {"text":"","lang":"fre","items":[]},"CONTENT_DESCRIPTOR":[],"PARENTAL_RATING_DESCRIPTOR":
-          {"country_code":"FRA","age":0},"PRIVATE_DESCRIPTOR":[{"tag":"0xAA","token":""}],"COMPONENT_DESCRIPTOR":
-          [{"stream_content":"0x05","component_type":"0x01","set_component_tag":46,"text":"aspect ratio","lang":"fre"},
-          {"stream_content":"0x06","component_type":"0x03","set_component_tag":46,"text":"audio","lang":"fre"},
-          {"stream_content":"0x03","component_type":"0x10","set_component_tag":46,"text":"subtitle","lang":"fre"}]}]},"eitFollowingSection":
-          {"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":
-          {"event_name":"","event_text":"","event_lang":"fre"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"","lang":"fre","items":[]}
-          ,"CONTENT_DESCRIPTOR":[],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"FRA","age":0},"PRIVATE_DESCRIPTOR":[{"tag":"0xAA","token":""}],
-          "COMPONENT_DESCRIPTOR":[{"stream_content":"0x05","component_type":"0x01","set_component_tag":46,"text":"aspect ratio","lang":"fre"},
-          {"stream_content":"0x06","component_type":"0x03","set_component_tag":46,"text":"audio","lang":"fre"},
-          {"stream_content":"0x03","component_type":"0x10","set_component_tag":46,"text":"subtitle","lang":"fre"}]}]}};*/
-
-  jsonRegex ='{"eitGeneral":{"version":"1.10","target":"-1"},"eitPresentSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":{"event_name":"[a-zA-Z0-9_ ]*","event_text":"[a-zA-Z0-9_ ]*","event_lang":"[a-zA-Z0-9_ ]*"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*","items":\\[\\]},"CONTENT_DESCRIPTOR":\\[({"content_nibble_level_1":"[a-zA-Z0-9_ ]*","content_nibble_level_2":"[a-zA-Z0-9_ ]*"})?\\],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"[a-zA-Z0-9_ ]*","age":[0-9]*},"PRIVATE_DESCRIPTOR":\\[({"tag":"[a-zA-Z0-9_ ]*","token":"[a-zA-Z0-9_ ]*"})?\\],"COMPONENT_DESCRIPTOR":[{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"}]}]},"eitFollowingSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":{"event_name":"[a-zA-Z0-9_ ]*","event_text":"[a-zA-Z0-9_ ]*","event_lang":"[a-zA-Z0-9_ ]*"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*","items":\\[\\]},"CONTENT_DESCRIPTOR":\\[({"content_nibble_level_1":"[a-zA-Z0-9_ ]*","content_nibble_level_2":"[a-zA-Z0-9_ ]*"})?\\],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"[a-zA-Z0-9_ ]*","age":[0-9]*},"PRIVATE_DESCRIPTOR":\\[({"tag":"[a-zA-Z0-9_ ]*","token":"[a-zA-Z0-9_ ]*"})?\\],"COMPONENT_DESCRIPTOR":[{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"}]}]}}';
- 
-  jsonForm = new FormGroup({
-    jsonTextArea: new FormControl('',Validators.pattern(this.jsonRegex))
-  });
-
-  get jsonTextArea() {
-    return this.jsonForm.get('jsonTextArea');
-  }
-  
-  
+  blockToShow = 1;
+  enabledPrettyJson = false;
 
   eit = new FormGroup({
     eitPresentSection: new FormGroup({
@@ -98,10 +74,132 @@ export class EitComponent implements OnInit {
         })
       })
     })
+  }); 
+  
+  jsonRegex ='{"eitGeneral":{"version":"1.10","target":"-1"},"eitPresentSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":{"event_name":"[a-zA-Z0-9_ ]*","event_text":"[a-zA-Z0-9_ ]*","event_lang":"[a-zA-Z0-9_ ]*"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*","items":\\[\\]},"CONTENT_DESCRIPTOR":\\[({"content_nibble_level_1":"[a-zA-Z0-9_ ]*","content_nibble_level_2":"[a-zA-Z0-9_ ]*"})?\\],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"[a-zA-Z0-9_ ]*","age":[0-9]*},"PRIVATE_DESCRIPTOR":\\[({"tag":"[a-zA-Z0-9_ ]*","token":"[a-zA-Z0-9_ ]*"})?\\],"COMPONENT_DESCRIPTOR":[{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"}]}]},"eitFollowingSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":{"event_name":"[a-zA-Z0-9_ ]*","event_text":"[a-zA-Z0-9_ ]*","event_lang":"[a-zA-Z0-9_ ]*"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*","items":\\[\\]},"CONTENT_DESCRIPTOR":\\[({"content_nibble_level_1":"[a-zA-Z0-9_ ]*","content_nibble_level_2":"[a-zA-Z0-9_ ]*"})?\\],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"[a-zA-Z0-9_ ]*","age":[0-9]*},"PRIVATE_DESCRIPTOR":\\[({"tag":"[a-zA-Z0-9_ ]*","token":"[a-zA-Z0-9_ ]*"})?\\],"COMPONENT_DESCRIPTOR":[{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"},{"stream_content":"[a-zA-Z0-9_ ]*","component_type":"[a-zA-Z0-9_ ]*","set_component_tag":[0-9]*,"text":"[a-zA-Z0-9_ ]*","lang":"[a-zA-Z0-9_ ]*"}]}]}}';
+ 
+  jsonForm = new FormGroup({
+    jsonTextArea: new FormControl('',Validators.pattern(this.jsonRegex))
   });
-
-
-  blockToShow = 1;
+  get jsonTextArea() {
+    return this.jsonForm.get('jsonTextArea');
+  }
+  
+  jsonText = {
+    "eitGeneral":
+      {
+        "version":"1.10",
+        "target":"-1"
+      },
+    "eitPresentSection":
+      {
+        "eitEvents":[
+          {
+            "SHORT_EVENT_DESCRIPTOR":{
+              "event_name":"",
+              "event_text":"",
+              "event_lang":""
+            },
+            "EXTENDED_EVENT_DESCRIPTOR":{
+              "text":"",
+              "lang":"",
+              "items":[]
+            },
+            "CONTENT_DESCRIPTOR":[{
+              "content_nibble_level_1":"",
+              "content_nibble_level_2":""
+            }],
+            "PARENTAL_RATING_DESCRIPTOR":{
+              "country_code":"",
+              "age":9,
+            },
+            "PRIVATE_DESCRIPTOR":[
+              {
+                "tag":"0xAA",
+                "token":""
+              }
+            ],
+            "COMPONENT_DESCRIPTOR":[
+              {
+                "stream_content":"0x05",
+                "component_type":"0x01",
+                "set_component_tag":46,
+                "text":"aspect ratio",
+                "lang":"fre"
+              },
+              {
+                "stream_content":"0x06",
+                "component_type":"0x03",
+                "set_component_tag":46,
+                "text":"cx",
+                "lang":"fre"
+              },
+              {
+                "stream_content":"0x03",
+                "component_type":"0x10",
+                "set_component_tag":46,
+                "text":"subtitle",
+                "lang":"fre"
+              }
+            ]
+          }
+        ]
+      },
+    "eitFollowingSection":
+    {
+      "eitEvents":[
+        {
+          "SHORT_EVENT_DESCRIPTOR":{
+            "event_name":"",
+            "event_text":"",
+            "event_lang":""
+          },
+          "EXTENDED_EVENT_DESCRIPTOR":{
+            "text":"",
+            "lang":"",
+            "items":[]
+          },
+          "CONTENT_DESCRIPTOR":[{
+            "content_nibble_level_1":"",
+            "content_nibble_level_2":""
+          }],
+          "PARENTAL_RATING_DESCRIPTOR":{
+            "country_code":"",
+            "age":9,
+          },
+          "PRIVATE_DESCRIPTOR":[
+            {
+              "tag":"0xAA",
+              "token":""
+            }
+          ],
+          "COMPONENT_DESCRIPTOR":[
+            {
+              "stream_content":"0x05",
+              "component_type":"0x01",
+              "set_component_tag":46,
+              "text":"aspect ratio",
+              "lang":"fre"
+            },
+            {
+              "stream_content":"0x06",
+              "component_type":"0x03",
+              "set_component_tag":46,
+              "text":"audio",
+              "lang":"fre"
+            },
+            {
+              "stream_content":"0x03",
+              "component_type":"0x10",
+              "set_component_tag":46,
+              "text":"subtitle",
+              "lang":"fre"
+            }
+          ]
+        }
+      ]
+    }
+  };
 
   constructor() {
     this.lang = [
@@ -174,7 +272,9 @@ export class EitComponent implements OnInit {
     ];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.jsonForm.patchValue({jsonTextArea : JSON.stringify(this.jsonText)});
+  }
 
 
   onChange(event) {
@@ -299,9 +399,160 @@ export class EitComponent implements OnInit {
   }
 
   showJson(){
-    let test= this.eit.value;
-    console.log(test);
-    this.jsonForm.patchValue({ jsonTextArea: '{"eitGeneral":{"version":"1.10","target":"-1"},"eitPresentSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":{"event_name":"sqdqsd","event_text":"sqdqsd","event_lang":"sqdqsd"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"sqdqsd","lang":"sqdqsd","items":[]},"CONTENT_DESCRIPTOR":[{"content_nibble_level_1":"dsqsd","content_nibble_level_2":"qsdqs"}],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"sdq","age":0},"PRIVATE_DESCRIPTOR":[{"tag":"sqd","token":"sqd"}],"COMPONENT_DESCRIPTOR":[{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"},{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"},{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"}]}]},"eitFollowingSection":{"eitEvents":[{"SHORT_EVENT_DESCRIPTOR":{"event_name":"sqdqsd","event_text":"sqdqsd","event_lang":"sqdqsd"},"EXTENDED_EVENT_DESCRIPTOR":{"text":"sqdqsd","lang":"sqdqsd","items":[]},"CONTENT_DESCRIPTOR":[{"content_nibble_level_1":"dsqsd","content_nibble_level_2":"qsdqs"}],"PARENTAL_RATING_DESCRIPTOR":{"country_code":"sdq","age":0},"PRIVATE_DESCRIPTOR":[{"tag":"sqd","token":"sqd"}],"COMPONENT_DESCRIPTOR":[{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"},{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"},{"stream_content":"sqdqsd","component_type":"sqdqsd","set_component_tag":99,"text":"sqdqsd","lang":"sqdqsd"}]}]}}' });
+    let jsonText = {
+      "eitGeneral":
+        {
+          "version":"1.10",
+          "target":"-1"
+        },
+      "eitPresentSection":
+        {
+          "eitEvents":[
+            {
+              "SHORT_EVENT_DESCRIPTOR":{
+                "event_name":this.eit.value.eitPresentSection.eitEvents.SHORT_EVENT_DESCRIPTOR.event_name,
+                "event_text":this.eit.value.eitPresentSection.eitEvents.SHORT_EVENT_DESCRIPTOR.event_text,
+                "event_lang":this.eit.value.eitPresentSection.eitEvents.SHORT_EVENT_DESCRIPTOR.event_lang
+              },
+              "EXTENDED_EVENT_DESCRIPTOR":{
+                "text":this.eit.value.eitPresentSection.eitEvents.EXTENDED_EVENT_DESCRIPTOR.text,
+                "lang":this.eit.value.eitPresentSection.eitEvents.EXTENDED_EVENT_DESCRIPTOR.lang,
+                "items":[]
+              },
+              "CONTENT_DESCRIPTOR":[{
+                "content_nibble_level_1":this.eit.value.eitPresentSection.eitEvents.CONTENT_DESCRIPTOR.content_nibble_level_1,
+                "content_nibble_level_2":this.eit.value.eitPresentSection.eitEvents.CONTENT_DESCRIPTOR.content_nibble_level_2
+              }],
+              "PARENTAL_RATING_DESCRIPTOR":{
+                "country_code":this.eit.value.eitPresentSection.eitEvents.PARENTAL_RATING_DESCRIPTOR.country_code,
+                "age":new Number(this.eit.value.eitPresentSection.eitEvents.PARENTAL_RATING_DESCRIPTOR.age),
+              },
+              "PRIVATE_DESCRIPTOR":[
+                {
+                  "tag":"0xAA",
+                  "token":""
+                }
+              ],
+              "COMPONENT_DESCRIPTOR":[
+                {
+                  "stream_content":"0x05",
+                  "component_type":"0x01",
+                  "set_component_tag":46,
+                  "text":"aspect ratio",
+                  "lang":"fre"
+                },
+                {
+                  "stream_content":"0x06",
+                  "component_type":"0x03",
+                  "set_component_tag":46,
+                  "text":"cx",
+                  "lang":"fre"
+                },
+                {
+                  "stream_content":"0x03",
+                  "component_type":"0x10",
+                  "set_component_tag":46,
+                  "text":"subtitle",
+                  "lang":"fre"
+                }
+              ]
+            }
+          ]
+        },
+      "eitFollowingSection":
+      {
+        "eitEvents":[
+          {
+            "SHORT_EVENT_DESCRIPTOR":{
+              "event_name":this.eit.value.eitFollowingSection.eitEvents.SHORT_EVENT_DESCRIPTOR.event_name,
+              "event_text":this.eit.value.eitFollowingSection.eitEvents.SHORT_EVENT_DESCRIPTOR.event_text,
+              "event_lang":this.eit.value.eitFollowingSection.eitEvents.SHORT_EVENT_DESCRIPTOR.event_lang
+            },
+            "EXTENDED_EVENT_DESCRIPTOR":{
+              "text":this.eit.value.eitFollowingSection.eitEvents.EXTENDED_EVENT_DESCRIPTOR.text,
+              "lang":this.eit.value.eitFollowingSection.eitEvents.EXTENDED_EVENT_DESCRIPTOR.lang,
+              "items":[]
+            },
+            "CONTENT_DESCRIPTOR":[{
+              "content_nibble_level_1":this.eit.value.eitFollowingSection.eitEvents.CONTENT_DESCRIPTOR.content_nibble_level_1,
+              "content_nibble_level_2":this.eit.value.eitFollowingSection.eitEvents.CONTENT_DESCRIPTOR.content_nibble_level_2
+            }],
+            "PARENTAL_RATING_DESCRIPTOR":{
+              "country_code":this.eit.value.eitFollowingSection.eitEvents.PARENTAL_RATING_DESCRIPTOR.country_code,
+              "age":new Number(this.eit.value.eitFollowingSection.eitEvents.PARENTAL_RATING_DESCRIPTOR.age),
+            },
+            "PRIVATE_DESCRIPTOR":[
+              {
+                "tag":"0xAA",
+                "token":""
+              }
+            ],
+            "COMPONENT_DESCRIPTOR":[
+              {
+                "stream_content":"0x05",
+                "component_type":"0x01",
+                "set_component_tag":46,
+                "text":"aspect ratio",
+                "lang":"fre"
+              },
+              {
+                "stream_content":"0x06",
+                "component_type":"0x03",
+                "set_component_tag":46,
+                "text":"audio",
+                "lang":"fre"
+              },
+              {
+                "stream_content":"0x03",
+                "component_type":"0x10",
+                "set_component_tag":46,
+                "text":"subtitle",
+                "lang":"fre"
+              }
+            ]
+          }
+        ]
+      }
+    };
+    this.jsonForm.patchValue({jsonTextArea : JSON.stringify(jsonText)});
+  }
+
+  importJson(){
+
+    let json = JSON.parse(this.jsonForm.getRawValue().jsonTextArea);
+
+    this.eit.patchValue({eitPresentSection: { eitEvents :{SHORT_EVENT_DESCRIPTOR : {event_name: json.eitPresentSection.eitEvents[0].SHORT_EVENT_DESCRIPTOR.event_name}}}});
+    this.eit.patchValue({eitPresentSection: { eitEvents :{SHORT_EVENT_DESCRIPTOR : {event_text: json.eitPresentSection.eitEvents[0].SHORT_EVENT_DESCRIPTOR.event_text}}}});
+    this.eit.patchValue({eitPresentSection: { eitEvents :{SHORT_EVENT_DESCRIPTOR : {event_lang: json.eitPresentSection.eitEvents[0].SHORT_EVENT_DESCRIPTOR.event_lang}}}});
+    this.eit.patchValue({eitPresentSection: { eitEvents :{EXTENDED_EVENT_DESCRIPTOR : {text: json.eitPresentSection.eitEvents[0].EXTENDED_EVENT_DESCRIPTOR.text}}}});
+    this.eit.patchValue({eitPresentSection: { eitEvents :{EXTENDED_EVENT_DESCRIPTOR : {lang: json.eitPresentSection.eitEvents[0].EXTENDED_EVENT_DESCRIPTOR.lang}}}});
+    this.eit.patchValue({eitPresentSection: { eitEvents :{CONTENT_DESCRIPTOR : {content_nibble_level_1: json.eitPresentSection.eitEvents[0].CONTENT_DESCRIPTOR.content_nibble_level_1}}}});
+    this.eit.patchValue({eitPresentSection: { eitEvents :{CONTENT_DESCRIPTOR : {content_nibble_level_2: json.eitPresentSection.eitEvents[0].CONTENT_DESCRIPTOR.content_nibble_level_2}}}});
+    this.eit.patchValue({eitPresentSection: { eitEvents :{PARENTAL_RATING_DESCRIPTOR : {country_code: json.eitPresentSection.eitEvents[0].PARENTAL_RATING_DESCRIPTOR.country_code}}}});
+    this.eit.patchValue({eitPresentSection: { eitEvents :{PARENTAL_RATING_DESCRIPTOR : {age: json.eitPresentSection.eitEvents[0].PARENTAL_RATING_DESCRIPTOR.age}}}});
+
+    this.eit.patchValue({eitFollowingSection: { eitEvents :{SHORT_EVENT_DESCRIPTOR : {event_name: json.eitFollowingSection.eitEvents[0].SHORT_EVENT_DESCRIPTOR.event_name}}}});
+    this.eit.patchValue({eitFollowingSection: { eitEvents :{SHORT_EVENT_DESCRIPTOR : {event_text: json.eitFollowingSection.eitEvents[0].SHORT_EVENT_DESCRIPTOR.event_text}}}});
+    this.eit.patchValue({eitFollowingSection: { eitEvents :{SHORT_EVENT_DESCRIPTOR : {event_lang: json.eitFollowingSection.eitEvents[0].SHORT_EVENT_DESCRIPTOR.event_lang}}}});
+    this.eit.patchValue({eitFollowingSection: { eitEvents :{EXTENDED_EVENT_DESCRIPTOR : {text: json.eitFollowingSection.eitEvents[0].EXTENDED_EVENT_DESCRIPTOR.text}}}});
+    this.eit.patchValue({eitFollowingSection: { eitEvents :{EXTENDED_EVENT_DESCRIPTOR : {lang: json.eitFollowingSection.eitEvents[0].EXTENDED_EVENT_DESCRIPTOR.lang}}}});
+    this.eit.patchValue({eitFollowingSection: { eitEvents :{CONTENT_DESCRIPTOR : {content_nibble_level_1: json.eitFollowingSection.eitEvents[0].CONTENT_DESCRIPTOR.content_nibble_level_1}}}});
+    this.eit.patchValue({eitFollowingSection: { eitEvents :{CONTENT_DESCRIPTOR : {content_nibble_level_2: json.eitFollowingSection.eitEvents[0].CONTENT_DESCRIPTOR.content_nibble_level_2}}}});
+    this.eit.patchValue({eitFollowingSection: { eitEvents :{PARENTAL_RATING_DESCRIPTOR : {country_code: json.eitFollowingSection.eitEvents[0].PARENTAL_RATING_DESCRIPTOR.country_code}}}});
+    this.eit.patchValue({eitFollowingSection: { eitEvents :{PARENTAL_RATING_DESCRIPTOR : {age: json.eitFollowingSection.eitEvents[0].PARENTAL_RATING_DESCRIPTOR.age}}}});
+    
+
   }
   
+  prettyJson(e){
+    console.log(e.checked);
+    if(e.checked){
+      this.jsonText =JSON.parse(this.jsonForm.getRawValue().jsonTextArea);
+      this.enabledPrettyJson = true;
+    }else{
+      this.enabledPrettyJson = false;
+    }
+  } 
 }
+
+

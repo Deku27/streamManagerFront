@@ -70,7 +70,7 @@
                             <label for="name">Name:</label>
                         </div>
                         <div class="ui-grid-col-8">
-                            <input pInputText id="name"  required  type="text" />
+                            <input pInputText type="text" id="name" formControlName="text"  />
                         </div>
                       </div>
                       <div class="ui-grid-row">
@@ -78,7 +78,7 @@
                             <label>Lang:</label>
                         </div>
                         <div class="ui-grid-col-8">
-                            <p-dropdown [style]="{'width':'100%'}" [options]="lang" placeholder="" [showClear]="true"></p-dropdown>
+                            <p-dropdown [style]="{'width':'100%'}" [options]="lang" formControlName="lang" placeholder="" [showClear]="true"></p-dropdown>
                         </div>
                       </div>
                   </p-fieldset>
@@ -97,7 +97,7 @@
                             </div>
                             <div class="ui-g-9">
                                 <p-dropdown [style]="{'width':'100%'}" [options]="category" placeholder=""
-                                  [showClear]="true" (onChange)="onChange($event)">
+                                  [showClear]="true" (onChange)="onChange($event)" formControlName="content_nibble_level_1">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -106,7 +106,9 @@
                                 <label>Level2:</label>
                             </div>
                             <div class="ui-g-9">
-                                <p-dropdown [style]="{'width':'100%'}" [options]="subCategory" placeholder="" [showClear]="true"></p-dropdown>
+                                <p-dropdown [style]="{'width':'100%'}" [options]="subCategory"placeholder=""
+                                 [showClear]="true" formControlName ="content_nibble_level_2">
+                                </p-dropdown>
                             </div>
                         </div>
                   </p-fieldset>
@@ -118,20 +120,21 @@
                           <p-checkbox value="ccc" label="Canal custom codes" (onChange)=(changeRating($event))></p-checkbox>
                       </div>
                       <div class="ui-grid-row">
+                            <div class="ui-g-2">
+                                <label>Country:</label>
+                            </div>
+                            <div class="ui-g-9">
+                                <p-dropdown [style]="{'width':'100%'}" [options]="countries" placeholder="" formControlName="country_code" [showClear]="true"></p-dropdown>
+                            </div>
                         <div class="ui-g-2">
                             <label>Lang: </label>
                         </div>
                         <div class="ui-g-9">
-                            <p-dropdown [style]="{'width':'100%'}" [options]="csaRating" placeholder="" [showClear]="true"></p-dropdown>
+                            <p-dropdown [style]="{'width':'100%'}" [options]="csaRating" placeholder="" formControlName="age" [showClear]="true"></p-dropdown>
                         </div>
                       </div>
                       <div class="ui-grid-row">
-                          <div class="ui-g-2">
-                              <label>Country:</label>
-                          </div>
-                          <div class="ui-g-9">
-                              <p-dropdown [style]="{'width':'100%'}" [options]="countries" placeholder="" [showClear]="true"></p-dropdown>
-                          </div>
+                        
                       </div>
                     </p-fieldset>
                 </div>
@@ -201,171 +204,174 @@
 
             <div formGroupName="eitFollowingSection"class="ui-g-6">
 
-              <div formGroupName="eitEvents">
+                <div formGroupName="eitEvents">
 
-                <div formGroupName="SHORT_EVENT_DESCRIPTOR" *ngIf="blockToShow == 1" class="ui-fluid">
-                    <p-fieldset legend="Present section">
-                      <div class="ui-grid-row">
-                        <div class="ui-grid-col-2">
-                          <label for="name">Name:</label>
-                        </div>
-                        <div class="ui-grid-col-8">
-                          <input pInputText id="name" formControlName="event_name" required type="text" />
-                        </div>
-                      </div>
-                      <div class="ui-grid-row">
-                        <div class="ui-grid-col-2">
-                          <label for="description">Description*:</label>
-                        </div>
-                        <div class="ui-grid-col-8">
-                          <input pInputText id="description" type="text" formControlName="event_text" />
-                        </div>
-                      </div>
-                      <div class="ui-grid-row">
-                        <div class="ui-grid-col-2">
-                          <label>Lang:</label>
-                        </div>
-                        <div class="ui-grid-col-8">
-                          <p-dropdown [style]="{'width':'100%'}" [options]="lang" placeholder="" formControlName="event_lang" [showClear]="true"></p-dropdown>
-                        </div>
-                      </div>
-                    </p-fieldset>
-                </div>
-
-                <div formGroupName="EXTENDED_EVENT_DESCRIPTOR" *ngIf="blockToShow == 2" class="ui-fluid">
-                  <p-fieldset legend="Present section">
-                      <div class="ui-grid-row">
-                        <div class="ui-grid-col-2">
+                    <div formGroupName="SHORT_EVENT_DESCRIPTOR" *ngIf="blockToShow == 1" class="ui-fluid">
+                        <p-fieldset legend="Following section">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-2">
                             <label for="name">Name:</label>
+                            </div>
+                            <div class="ui-grid-col-8">
+                            <input pInputText id="name" formControlName="event_name" required type="text" />
+                            </div>
                         </div>
-                        <div class="ui-grid-col-8">
-                            <input pInputText id="name"  required  type="text" />
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-2">
+                            <label for="description">Description*:</label>
+                            </div>
+                            <div class="ui-grid-col-8">
+                            <input pInputText id="description" type="text" formControlName="event_text" />
+                            </div>
                         </div>
-                      </div>
-                      <div class="ui-grid-row">
-                        <div class="ui-grid-col-2">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-2">
                             <label>Lang:</label>
+                            </div>
+                            <div class="ui-grid-col-8">
+                            <p-dropdown [style]="{'width':'100%'}" [options]="lang" placeholder="" formControlName="event_lang" [showClear]="true"></p-dropdown>
+                            </div>
                         </div>
-                        <div class="ui-grid-col-8">
-                            <p-dropdown [style]="{'width':'100%'}" [options]="lang" placeholder="" [showClear]="true"></p-dropdown>
-                        </div>
-                      </div>
-                  </p-fieldset>
-                </div>
-
-                <div formGroupName="CONTENT_DESCRIPTOR" *ngIf="blockToShow == 3">
-                  <p-fieldset legend="Present section">
-                      <div class="ui-grid-row">
-                          <button pButton type="button" label="Define category" class="ui-button-info"></button>
-                          <button pButton type="button" icon='fa fa-close'  class="ui-button-danger"></button>
-                      </div>
-
-                        <div class="ui-grid-row">
-                            <div class="ui-g-3">
-                                <label>Level1:</label>
+                        </p-fieldset>
+                    </div>
+    
+                    <div formGroupName="EXTENDED_EVENT_DESCRIPTOR" *ngIf="blockToShow == 2" class="ui-fluid">
+                        <p-fieldset legend="Following section">
+                            <div class="ui-grid-row">
+                            <div class="ui-grid-col-2">
+                                <label for="name">Name:</label>
+                            </div>
+                            <div class="ui-grid-col-8">
+                                <input pInputText type="text" id="name" formControlName="text"  />
+                            </div>
+                            </div>
+                            <div class="ui-grid-row">
+                            <div class="ui-grid-col-2">
+                                <label>Lang:</label>
+                            </div>
+                            <div class="ui-grid-col-8">
+                                <p-dropdown [style]="{'width':'100%'}" [options]="lang" formControlName="lang" placeholder="" [showClear]="true"></p-dropdown>
+                            </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+    
+                    <div formGroupName="CONTENT_DESCRIPTOR" *ngIf="blockToShow == 3">
+                        <p-fieldset legend="Following section">
+                            <div class="ui-grid-row">
+                                <button pButton type="button" label="Define category" class="ui-button-info"></button>
+                                <button pButton type="button" icon='fa fa-close'  class="ui-button-danger"></button>
+                            </div>
+    
+                            <div class="ui-grid-row">
+                                <div class="ui-g-3">
+                                    <label>Level1:</label>
+                                </div>
+                                <div class="ui-g-9">
+                                    <p-dropdown [style]="{'width':'100%'}" [options]="category" placeholder=""
+                                        [showClear]="true" (onChange)="onChange($event)" formControlName="content_nibble_level_1">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="ui-grid-row">
+                                <div class="ui-g-3">
+                                    <label>Level2:</label>
+                                </div>
+                                <div class="ui-g-9">
+                                    <p-dropdown [style]="{'width':'100%'}" [options]="subCategory"placeholder=""
+                                        [showClear]="true" formControlName ="content_nibble_level_2">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+    
+                    <div formGroupName="PARENTAL_RATING_DESCRIPTOR" *ngIf="blockToShow == 4">
+                        <p-fieldset legend="Following section">
+                            <div class="ui-grid-row">
+                                <p-checkbox value="ccc" label="Canal custom codes" (onChange)=(changeRating($event))></p-checkbox>
+                            </div>
+                            <div class="ui-grid-row">
+                                <div class="ui-g-2">
+                                    <label>Country:</label>
+                                </div>
+                                <div class="ui-g-9">
+                                    <p-dropdown [style]="{'width':'100%'}" [options]="countries" placeholder="" formControlName="country_code" [showClear]="true"></p-dropdown>
+                                </div>
+                            <div class="ui-g-2">
+                                <label>Lang: </label>
                             </div>
                             <div class="ui-g-9">
-                                <p-dropdown [style]="{'width':'100%'}" [options]="category" placeholder=""
-                                  [showClear]="true" (onChange)="onChange($event)">
-                                </p-dropdown>
+                                <p-dropdown [style]="{'width':'100%'}" [options]="csaRating" placeholder="" formControlName="age" [showClear]="true"></p-dropdown>
                             </div>
-                        </div>
-                        <div class="ui-grid-row">
-                            <div class="ui-g-3">
-                                <label>Level2:</label>
                             </div>
-                            <div class="ui-g-9">
-                                <p-dropdown [style]="{'width':'100%'}" [options]="subCategory" placeholder="" [showClear]="true"></p-dropdown>
+                            <div class="ui-grid-row">
+                            
                             </div>
-                        </div>
-                  </p-fieldset>
+                        </p-fieldset>
+                    </div>
+    
+                    <div formGroupName="COMPONENT_DESCRIPTOR" *ngIf="blockToShow == 5">
+                        <p-fieldset legend="Following section">
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-6">
+                                    <div class="ui-g-4">
+                                        <label>Aspect ratio</label>
+                                    </div>
+                                    <div class="ui-g-8">
+                                        <p-dropdown [style]="{'width':'100%'}" [options]="lang" placeholder="" [showClear]="true"></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-g-nopad">
+                                    <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, hic facere
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="ui-g">
+                                <div class="ui-g-12">
+                                    <button pButton type="button" label="Add audio Language" class="ui-button-info"></button>
+                                    <button pButton type="button" icon='fa fa-close'  class="ui-button-danger"></button>
+                                </div>
+                                <div class="ui-g-12 ui-md-6">
+                                    <div class="ui-g-3">
+                                        <label>lang:</label>
+                                    </div>
+                                    <div class="ui-g-9">
+                                        <p-dropdown [style]="{'width':'100%'}" [options]="lang" placeholder="" [showClear]="true"></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-g-nopad">
+                                    <div class="ui-g-12">
+                                        <p-checkbox value="val1" label="audio description"></p-checkbox>
+                                        <p-radioButton name="audioGroup" value="Option 1" label="AAC(normal)"></p-radioButton>
+                                    </div>
+                                    <div class="ui-g-12">
+                                        <p-radioButton name="audioGroup" value="Option 1" label="AC3(dolby)"></p-radioButton>
+                                        <p-radioButton name="audioGroup" value="Option 1" label="DTS"></p-radioButton>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="ui-g">
+                            <div class="ui-g-12">
+                                <button pButton type="button" label="Add subtitle Language" class="ui-button-info"></button>
+                                <button pButton type="button" icon='fa fa-close'  class="ui-button-danger"></button>
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <div class="ui-g-4">
+                                    <label>lang:</label>
+                                </div>
+                                <div class="ui-g-8">
+                                    <p-dropdown [style]="{'width':'100%'}" [options]="lang" placeholder="" [showClear]="true"></p-dropdown>
+                                </div>
+                            </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+            
                 </div>
-
-                <div formGroupName="PARENTAL_RATING_DESCRIPTOR" *ngIf="blockToShow == 4">
-                  <p-fieldset legend="Present section">
-                      <div class="ui-grid-row">
-                          <p-checkbox value="ccc" label="Canal custom codes" (onChange)=(changeRating($event))></p-checkbox>
-                      </div>
-                      <div class="ui-grid-row">
-                        <div class="ui-g-2">
-                            <label>Lang: </label>
-                        </div>
-                        <div class="ui-g-9">
-                            <p-dropdown [style]="{'width':'100%'}" [options]="csaRating" placeholder="" [showClear]="true"></p-dropdown>
-                        </div>
-                      </div>
-                      <div class="ui-grid-row">
-                          <div class="ui-g-2">
-                              <label>Country:</label>
-                          </div>
-                          <div class="ui-g-9">
-                              <p-dropdown [style]="{'width':'100%'}" [options]="countries" placeholder="" [showClear]="true"></p-dropdown>
-                          </div>
-                      </div>
-                    </p-fieldset>
-                </div>
-
-                <div formGroupName="COMPONENT_DESCRIPTOR" *ngIf="blockToShow == 5">
-                  <p-fieldset legend="Present section">
-                      <div class="ui-g">
-                          <div class="ui-g-12 ui-md-6">
-                              <div class="ui-g-4">
-                                  <label>Aspect ratio</label>
-                              </div>
-                              <div class="ui-g-8">
-                                  <p-dropdown [style]="{'width':'100%'}" [options]="lang" placeholder="" [showClear]="true"></p-dropdown>
-                              </div>
-                          </div>
-                          <div class="ui-g-12 ui-md-6 ui-g-nopad">
-                              <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, hic facere
-                              </p>
-                          </div>
-                      </div>
-                      <hr>
-                      <div class="ui-g">
-                          <div class="ui-g-12">
-                              <button pButton type="button" label="Add audio Language" class="ui-button-info"></button>
-                              <button pButton type="button" icon='fa fa-close'  class="ui-button-danger"></button>
-                          </div>
-                          <div class="ui-g-12 ui-md-6">
-                              <div class="ui-g-3">
-                                  <label>lang:</label>
-                              </div>
-                              <div class="ui-g-9">
-                                  <p-dropdown [style]="{'width':'100%'}" [options]="lang" placeholder="" [showClear]="true"></p-dropdown>
-                              </div>
-                          </div>
-                          <div class="ui-g-12 ui-md-6 ui-g-nopad">
-                              <div class="ui-g-12">
-                                  <p-checkbox value="val1" label="audio description"></p-checkbox>
-                                  <p-radioButton name="audioGroup" value="Option 1" label="AAC(normal)"></p-radioButton>
-                              </div>
-                              <div class="ui-g-12">
-                                  <p-radioButton name="audioGroup" value="Option 1" label="AC3(dolby)"></p-radioButton>
-                                  <p-radioButton name="audioGroup" value="Option 1" label="DTS"></p-radioButton>
-                              </div>
-                          </div>
-                      </div>
-                      <hr>
-                      <div class="ui-g">
-                        <div class="ui-g-12">
-                          <button pButton type="button" label="Add subtitle Language" class="ui-button-info"></button>
-                          <button pButton type="button" icon='fa fa-close'  class="ui-button-danger"></button>
-                        </div>
-                        <div class="ui-g-12 ui-md-6">
-                            <div class="ui-g-4">
-                                <label>lang:</label>
-                            </div>
-                            <div class="ui-g-8">
-                                <p-dropdown [style]="{'width':'100%'}" [options]="lang" placeholder="" [showClear]="true"></p-dropdown>
-                            </div>
-                        </div>
-                      </div>
-                  </p-fieldset>
-                </div>
-
-              </div>
             </div>
           </div>
 
@@ -374,30 +380,27 @@
     </p-tabPanel>
 
     <p-tabPanel header="Json">
-        <div class="ui-g-12">
-            
-                <button pButton type="button" label="Show Json" class="ui-button-danger" (click)='showJson()'></button>
-                <button pButton type="button" label="Import Json" class="ui-button-warning"></button>
-                <button pButton type="button" label="Pretty Json" class="ui-button-success"></button>
-        </div>
-        <div class="ui-grid-row">
-            <form [formGroup]="jsonForm">
-                <div class="ui-grid ui-fluid" spellcheck="false">
-                    <textarea pInputTextarea formControlName="jsonTextArea"  rows="10"></textarea>
-                </div>          
-            </form>
-    
-            <div *ngIf="jsonTextArea.errors?.pattern">
-                    User name not valid.
-            </div>  
-        </div>
-        
-    
+    <div class="ui-g-12">
+        <button pButton type="button" label="Show Json" class="ui-button-danger" id="showJsonButton" (click)='showJson()'></button>
+        <button pButton type="button" label="Import Json" class="ui-button-warning" id="importJsonButton" (click)='importJson()'></button>
 
-    <hr>
+        <p-toggleButton onLabel="Enable Pretty Json" offLabel="Disabled Pretty Json" onIcon="pi pi-check" offIcon="pi pi-times" (onChange)="prettyJson($event)"></p-toggleButton>
+    </div>
     <div class="ui-grid-row">
-    <!--pre contenteditable="true">{{ eit.value | json }}</pre-->
-    <!--ngx-json-viewer [json]="jsonshit"></ngx-json-viewer-->
+        <form [formGroup]="jsonForm">
+            <div class="ui-grid ui-fluid" spellcheck="false">
+                <textarea pInputTextarea formControlName="jsonTextArea"  rows="10"></textarea>
+            </div>          
+        </form>
+
+        <div *ngIf="jsonTextArea.errors?.pattern" class="jsonError">
+            Json Field in not valid ! 
+        </div>  
+    </div>
+        
+    <hr>
+    <div class="ui-grid-row" *ngIf="enabledPrettyJson">
+        <ngx-json-viewer [json]="jsonText"></ngx-json-viewer>
     </div>
 
     </p-tabPanel>

@@ -13,16 +13,15 @@ import {
   selector: 'app-stream',
   templateUrl: './stream.component.html',
   styleUrls: ['./stream.component.css'],
-  providers: [ConfirmationService , MessageService]
+  providers: [ConfirmationService, MessageService]
 })
 export class StreamComponent implements OnInit {
 
   /* 
-      Different messages for the user 
-        - msgs : 
+      Messages for the user 
+     
         - validationErrors : 
   */
-  msgs: Message[] = [];
   validationErrors = [];
 
 
@@ -30,21 +29,21 @@ export class StreamComponent implements OnInit {
   streamID: number;
   streamTableCols = [];
   videosArray: any;
- 
+
 
   /* new stream Form */
   newStreamForm: any;
 
   /* new Stream Dialog */
-  dialogState: string; 
+  dialogState: string;
   display = false;
-
+  validatingErrosBlock = false;
 
   constructor(
     private streamService: StreamService,
     private videoService: VideosService,
     private confirmationService: ConfirmationService,
-    private messageService:MessageService
+    private messageService: MessageService
 
   ) {
     this.newStreamForm = new FormGroup({
@@ -80,7 +79,7 @@ export class StreamComponent implements OnInit {
         this.streams = data;
       },
       err => {
-        console.log(err.message);
+        this.messageService.add({ key: 'topLeftMessages', severity: 'error', summary: 'HTTP Error ', detail: "HTTP GET Streams failed, please check the API" });
       }
     );
     this.videoService.getVideosInfo().subscribe(
@@ -89,7 +88,7 @@ export class StreamComponent implements OnInit {
         this.selectOptionsValues();
       },
       err => {
-        this.messageService.add({key: 'topLeftMessages' , severity:'error', summary:'HTTP Error ', detail:"GET Streams Error: " + err.message });
+        this.messageService.add({ key: 'topLeftMessages', severity: 'error', summary: 'HTTP Error ', detail: "HTTP GET Videos failed, please check the API: " + err.message });
       }
     );
   }
@@ -117,31 +116,24 @@ export class StreamComponent implements OnInit {
       if (this.dialogState === 'create') {
         this.streamService.saveStream(stream).subscribe(
           data => {
-            this.msgs = [];
-            this.msgs.push({
-              severity: 'success',
-              summary: 'Stream added successfully '
-            });
+            this.messageService.add({ key: 'topLeftMessages', severity: 'success', summary: 'Success Message', detail: 'Stream added successfully ' });
             this.reloadStreamTable();
           },
           err => {
-            this.messageService.add({severity:'error', summary:'HTTP Error ', detail:"Saving Stream Error: " + err.message });
+            this.messageService.add({ key: 'topLeftMessages', severity: 'error', summary: 'HTTP Error ', detail: "HTTP save Stream failed, please check the API" + err.message });
           }
         );
-        this.display = false; 
+        this.display = false;
         this.newStreamForm.reset();
       }
       else {
         this.streamService.editStream(this.streamID, stream).subscribe(
           data => {
-            this.msgs.push({
-              severity: 'success',
-              summary: 'Stream Edited successfully '
-            });
+            this.messageService.add({ key: 'topLeftMessages', severity: 'success', summary: 'Success Message', detail: 'Stream Edited successfully ' });
             this.reloadStreamTable();
           },
           err => {
-            console.log(err);
+            this.messageService.add({ key: 'topLeftMessages', severity: 'error', summary: 'HTTP Error ', detail: "updating Stream failed: " + err.message });
           }
         );
         this.display = false;
@@ -155,12 +147,13 @@ export class StreamComponent implements OnInit {
         this.fillEditForm(data);
       },
       err => {
-        console.log(err);
+        this.messageService.add({ key: 'topLeftMessages', severity: 'error', summary: 'HTTP Error ', detail: "HTTP GET StreamByID failed, please check the API: " + err.message });
       }
     );
   }
 
   showDialog(streamID) {
+    this.validatingErrosBlock = false;
     if (streamID === undefined) {
       this.dialogState = 'create';
       this.newStreamForm.reset();
@@ -190,7 +183,7 @@ export class StreamComponent implements OnInit {
   }
 
   ConfirmDeleteStream(id: number) {
-    console.log(id);
+
     this.confirmationService.confirm({
       message: 'Do you want to delete this stream ?',
       header: 'Delete Confirmation',
@@ -198,20 +191,14 @@ export class StreamComponent implements OnInit {
         this.streamService.deleteStream(id).subscribe(
           data => {
             this.reloadStreamTable();
-            this.msgs = [];
-            this.msgs.push({
-              severity: 'success',
-              summary: 'Stream successfully deleted'
-            });
+            this.messageService.add({ key: 'topLeftMessages', severity: 'info', summary: '', detail: "Stream Deleted Successfully" });
           },
           err => {
-            console.log(err);
+            this.messageService.add({ key: 'topLeftMessages', severity: 'error', summary: 'HTTP Error ', detail: "HTTP GET StreamByID failed, please check the API: " + err.message });
           }
         );
       },
-      reject: () => {
-        //  this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
-      }
+      reject: () => { }
     });
   }
 
@@ -221,13 +208,12 @@ export class StreamComponent implements OnInit {
         this.streams = data;
       },
       err => {
-        console.log(err);
+        this.messageService.add({ key: 'topLeftMessages', severity: 'error', summary: 'HTTP Error ', detail: "HTTP GET Streams failed, please check the API: " + err.message });
       }
     );
   }
 
   fillEditForm(data) {
-    console.log(data);
     let tsid_sid_onid = data.tsid + ':' + data.sid + ':' + data.onid;
     let video = { idvideo: data.video.idvideo, filename: data.video.filename };
     this.newStreamForm.patchValue({ lcn: data.lcn });
@@ -246,34 +232,42 @@ export class StreamComponent implements OnInit {
     let ValidForm = true;
     if (this.newStreamForm.getRawValue().lcn == null) {
       this.validationErrors.push({ severity: 'error', summary: 'LCN', detail: 'field is required' });
+      this.validatingErrosBlock = true;
       ValidForm = false;
     }
     if (this.newStreamForm.getRawValue().usi == null) {
       this.validationErrors.push({ severity: 'error', summary: 'USI', detail: 'field is required' });
+      this.validatingErrosBlock = true;
       ValidForm = false;
     }
     if (this.newStreamForm.getRawValue().name == null) {
       this.validationErrors.push({ severity: 'error', summary: 'Name', detail: 'field is required' });
+      this.validatingErrosBlock = true;
       ValidForm = false;
     }
     if (this.newStreamForm.getRawValue().description == null) {
       this.validationErrors.push({ severity: 'error', summary: 'Description', detail: 'field is required' });
+      this.validatingErrosBlock = true;
       ValidForm = false;
     }
     if (this.newStreamForm.getRawValue().videofile == null) {
       this.validationErrors.push({ severity: 'error', summary: 'Videofile', detail: 'field is required' });
+      this.validatingErrosBlock = true;
       ValidForm = false;
     }
     if (this.newStreamForm.getRawValue().tsid_sid_onid == null) {
       this.validationErrors.push({ severity: 'error', summary: 'tsid_sid_onid', detail: 'field is required' });
+      this.validatingErrosBlock = true;
       ValidForm = false;
     }
     if (this.newStreamForm.getRawValue().address == null) {
       this.validationErrors.push({ severity: 'error', summary: 'Address', detail: 'field is required' });
+      this.validatingErrosBlock = true;
       ValidForm = false;
     }
     if (this.newStreamForm.getRawValue().port == null) {
       this.validationErrors.push({ severity: 'error', summary: 'Port', detail: 'field is required' });
+      this.validatingErrosBlock = true;
       ValidForm = false;
     }
 
@@ -281,5 +275,5 @@ export class StreamComponent implements OnInit {
 
   }
 
-  
+
 }

@@ -19,6 +19,7 @@ export class VideosComponent implements OnInit {
   msgs: Message[] = [];
   validationErrors: Message[] = [];
   uploadMessages: Message[] = [];
+  validatingErrosBlock = false;
 
 
   videos: Video[];
@@ -100,8 +101,7 @@ export class VideosComponent implements OnInit {
         this.videoService.saveVideo(video).subscribe(
           data => {
             this.reloadVideoTable();
-            this.msgs = [];
-            this.msgs.push({severity: 'success',summary: 'Video successfully added'});
+            this.messageService.add({ severity: 'success', summary: 'HTTP Error ', detail: "Video successfully added" });
           },
           err => {
             this.messageService.add({ severity: 'error', summary: 'HTTP Error ', detail: " HTTP Post Video Error, please check the API" });
@@ -113,8 +113,7 @@ export class VideosComponent implements OnInit {
         this.videoService.editVideo(this.videoID, video).subscribe(
           data => {
             this.reloadVideoTable();            
-            this.msgs = [];
-            this.msgs.push({severity: 'success',summary: 'Video Edited successfully '});
+            this.messageService.add({ severity: 'success', summary: 'HTTP Error ', detail: "Video successfully Edited" });
           },
           err => {
             this.messageService.add({ severity: 'error', summary: 'HTTP Error ', detail: " HTTP Update Video Error, please check the API" });
