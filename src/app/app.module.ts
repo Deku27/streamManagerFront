@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule } from '@angular/common/http';
@@ -13,16 +13,21 @@ import {CheckboxModule, FileUploadModule, InputTextModule, MenubarModule, MenuIt
   DropdownModule, MessageModule, MessagesModule, InputMaskModule, ConfirmDialogModule, GrowlModule,
    TabViewModule, FieldsetModule, RadioButtonModule, InputTextareaModule, ToggleButtonModule} from 'primeng/primeng';
 import {ToastModule} from 'primeng/toast';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StreamComponent } from './stream/stream.component';
-import { VideosService } from '../services/videos.service';
-import { StreamService } from '../services/stream.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { VideosComponent } from './videos/videos.component';
-import { EitComponent } from './eit/eit.component';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
+// App Components
+import { StreamComponent } from './stream/stream.component';
+import { VideosComponent } from './videos/videos.component';
+import { EitComponent } from './eit/eit.component';
 
+// App Services
+import { VideosService } from '../services/videos.service';
+import { StreamService } from '../services/stream.service';
+
+// App Routes
 const appRoutes: Routes = [
   {
     path: 'stream',
@@ -46,32 +51,11 @@ const appRoutes: Routes = [
   declarations: [AppComponent, StreamComponent, VideosComponent, EitComponent],
   imports: [
     HttpClientModule, RouterModule.forRoot(appRoutes), BrowserModule, BrowserAnimationsModule , ReactiveFormsModule,
-    ButtonModule,
-    DialogModule,
-    InputTextModule,
-    CheckboxModule,
-    FileUploadModule,  
-    TableModule,
-    MenubarModule,
-    CardModule,
-    FormsModule,
-    DropdownModule,
-    MessageModule,
-    MessagesModule,
-    InputMaskModule,
-    AngularFontAwesomeModule,
-    ConfirmDialogModule,
-    GrowlModule,
-    TabViewModule,
-    FieldsetModule,
-    RadioButtonModule,
-    InputTextareaModule,
-    ToastModule,
-    NgxJsonViewerModule,
-    ToggleButtonModule
+    ButtonModule,DialogModule,InputTextModule,CheckboxModule,FileUploadModule,  TableModule,MenubarModule,CardModule,FormsModule,DropdownModule,MessageModule,
+    MessagesModule,InputMaskModule,AngularFontAwesomeModule,ConfirmDialogModule,GrowlModule,TabViewModule,FieldsetModule,RadioButtonModule,InputTextareaModule,
+    ToastModule,NgxJsonViewerModule,ToggleButtonModule
   ],
   providers: [VideosService , StreamService],
   bootstrap: [AppComponent],
-  /*entryComponents: [NewVideoComponent]*/
 })
 export class AppModule { }

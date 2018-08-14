@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Video } from '../../models/video';
 import { VideosService } from '../../services/videos.service';
 import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
@@ -13,9 +13,7 @@ import { Message, ConfirmationService, MessageService } from '../../../node_modu
 })
 export class VideosComponent implements OnInit {
 
-  /* 
-    Messages
-  */
+
   msgs: Message[] = [];
   validationErrors: Message[] = [];
   uploadMessages: Message[] = [];
@@ -29,27 +27,21 @@ export class VideosComponent implements OnInit {
 
   newVideoForm: any;
 
-  /*
-    Upload Variables 
-  */
   uploded = false;
   uploadError = false;
 
-  /*
-    Dialof Variables
-  */
   dialogState: string;
   display = false;
 
-  constructor(
-    private videoService: VideosService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService
-  ) {
+
+  constructor(private videoService: VideosService, private confirmationService: ConfirmationService, private messageService: MessageService) {
+
+
     this.videosTableCols = [
-      { field: 'filename' },{ field: 'audio' },{ field: 'subtitle' },{ field: 'pmt' },{ field: 'color' },{ field: 'resolution' },
-      { field: 'ocs' },{ field: 'csa5' },{ field: 'format' },{ field: 'enabled' },{ field: 'description' },{ field: ' status' }
+      { field: 'filename' }, { field: 'audio' }, { field: 'subtitle' }, { field: 'pmt' }, { field: 'color' }, { field: 'resolution' },
+      { field: 'ocs' }, { field: 'csa5' }, { field: 'format' }, { field: 'enabled' }, { field: 'description' }, { field: ' status' }
     ];
+
     this.newVideoForm = new FormGroup({
       filename: new FormControl({ value: '', disabled: true }),
       description: new FormControl({ value: '', disabled: false }),
@@ -62,17 +54,25 @@ export class VideosComponent implements OnInit {
     });
   }
 
+  /**
+   * on init : we get the video List using the videoService , and then we display the data to the user
+   */
   ngOnInit() {
+
     this.videoService.getVideos().subscribe(
       data => {
         this.videos = data;
       },
       err => {
-        this.messageService.add({key:'topLeftMessages', severity: 'error', summary: 'HTTP Error ', detail: " HTTP GET Videos Error, please check the API" });
+        this.messageService.add({ key: 'topLeftMessages', severity: 'error', summary: 'HTTP Error ', detail: " HTTP GET Videos Error, please check the API" });
       }
     );
   }
 
+  /**
+   * @function showDialog :Display the new/Edit Video Dialog
+   * @param videoID: if the videoID  is  undefined, it means that we are in an create  state , otherwise , we are in a edit state .
+   */
   showDialog(videoID) {
     if (videoID === undefined) {
       this.dialogState = 'create';
@@ -85,6 +85,9 @@ export class VideosComponent implements OnInit {
       this.display = true;
     }
   }
+  /**
+   * @function saveVideo : if the Form fields are valid , we create the Video Object and then we use the videoService to create/update the video 
+   */
   saveVideo() {
     if (this.validFields()) {
       let filename = this.newVideoForm.getRawValue().filename;
@@ -96,7 +99,7 @@ export class VideosComponent implements OnInit {
       let resolution = this.newVideoForm.getRawValue().resolution;
       let enabled = this.newVideoForm.getRawValue().enabled;
 
-      let video: Video = new Video(filename,description,color,resolution,ocs,csa5,format,enabled);
+      let video: Video = new Video(filename, description, color, resolution, ocs, csa5, format, enabled);
       if (this.dialogState === 'create') {
         this.videoService.saveVideo(video).subscribe(
           data => {
@@ -112,7 +115,7 @@ export class VideosComponent implements OnInit {
       } else {
         this.videoService.editVideo(this.videoID, video).subscribe(
           data => {
-            this.reloadVideoTable();            
+            this.reloadVideoTable();
             this.messageService.add({ severity: 'success', summary: 'HTTP Error ', detail: "Video successfully Edited" });
           },
           err => {
@@ -125,6 +128,9 @@ export class VideosComponent implements OnInit {
     }
   }
 
+  /**
+   * @function validFields: validate the create/Edit Form.
+   */
   validFields() {
     this.validationErrors = [];
     let ValidForm = true;
@@ -147,6 +153,9 @@ export class VideosComponent implements OnInit {
     return ValidForm;
   }
 
+   /**
+   * @function reloadVideoTable : when we create/Edit a video , we need to reload the data so we can have like a real Time datatable. 
+   */
   reloadVideoTable() {
     this.videoService.getVideos().subscribe(
       data => {
@@ -157,6 +166,7 @@ export class VideosComponent implements OnInit {
       }
     );
   }
+
 
   getVideoByID() {
 
@@ -181,7 +191,10 @@ export class VideosComponent implements OnInit {
     this.newVideoForm.patchValue({ enabled: data.enabled });
   }
 
- 
+  /**
+   * @function ConfirmDeleteVideo : delete a video  by its ID.
+   * @param id : video ID.
+   */
   ConfirmDeleteVideo(id: number) {
     this.confirmationService.confirm({
       message: 'By deleting this Video, you are going to delete every stream related to it, do you want to proceed?',
@@ -191,53 +204,77 @@ export class VideosComponent implements OnInit {
           data => {
             this.reloadVideoTable();
             this.msgs = [];
-            this.msgs.push({severity: 'success',summary: 'Video successfully deleted'});
+            this.msgs.push({ severity: 'success', summary: 'Video successfully deleted' });
           },
           err => {
             this.messageService.add({ severity: 'error', summary: 'HTTP Error ', detail: " HTTP DELETE Video Error, please check the API" });
           }
         );
       },
-      reject: () => {}
+      reject: () => { }
     });
 
   }
   // ***** Upload & Validation Upload functions
+
+  /**
+   * @function changeFileName : change the name input on the form  when we upload a video.
+   * @param event: the event Object.
+   */
   changeFileName(event) {
     let videoToUpload: File = event.files[0];
     this.newVideoForm.patchValue({ filename: videoToUpload.name });
   }
+
+  /**
+   *  @function clear : clear the files from the uploader.
+   */
   clear() {
     this.newVideoForm.patchValue({ filename: '' });
     this.uploded = false;
     this.uploadError = false;
   }
+
+  /**
+   * @function removeUploadedFile : remove the uploaded file from the uploader.
+   * @param event : Event Object.
+   */
   removeUploadedFile(event) {
     this.newVideoForm.patchValue({ filename: '' });
     this.uploded = false;
     this.uploadError = false;
   }
-  uploadVideo(event, uploadForm) {
+
+  /**
+   * @function uploadVideo: upload the video file to the server using the videoService. 
+   * @param event : Event Object.
+  */
+  uploadVideo(event) {
     let videoToUpload: File = event.files[0];
     if (this.checkExtenstion(videoToUpload.name)) {
       this.videoService.uploadVideo(videoToUpload).subscribe(
         data => {
           this.uploded = true;
           this.uploadMessages = [];
-          this.uploadMessages.push({severity: 'Info',summary: 'Video successfully uploaded'});
+          this.uploadMessages.push({ severity: 'Info', summary: 'Video successfully uploaded' });
         },
         err => {
           this.msgs = [];
-          this.uploadMessages.push({severity: 'error',summary: 'HTTP Upload Videp Error , Please check the API'});
+          this.uploadMessages.push({ severity: 'error', summary: 'HTTP Upload Videp Error , Please check the API' });
         });
     } else {
       this.msgs = [];
-      this.uploadMessages.push({severity: 'error',summary: 'Check the extension of the file ( TS ) '});
+      this.uploadMessages.push({ severity: 'error', summary: 'Check the extension of the file ( TS ) ' });
     }
-
   }
+
+
+  /**
+   * @function checkExtenstion : we check if the extension of the uploaded video is .ts 
+   * @param filename : the name of the  uploaded file.
+   */
   checkExtenstion(filename) {
-    let allowedExtensions = ['png', 'jpg', 'ts'];
+    let allowedExtensions = ['ts']; // we can add other extensions.
     let validFile = true;
     let fileExtension = filename.split('.').pop();
     if (this.isInArray(allowedExtensions, fileExtension)) {

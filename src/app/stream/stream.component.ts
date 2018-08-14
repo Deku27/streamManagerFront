@@ -17,35 +17,24 @@ import {
 })
 export class StreamComponent implements OnInit {
 
-  /* 
-      Messages for the user 
-     
-        - validationErrors : 
-  */
   validationErrors = [];
-
+  validatingErrosBlock = false;
 
   streams: Stream[];
   streamID: number;
   streamTableCols = [];
+
   videosArray: any;
 
-
-  /* new stream Form */
   newStreamForm: any;
 
-  /* new Stream Dialog */
   dialogState: string;
   display = false;
-  validatingErrosBlock = false;
+  
 
-  constructor(
-    private streamService: StreamService,
-    private videoService: VideosService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService
+  constructor(private streamService: StreamService,private videoService: VideosService,private confirmationService: ConfirmationService,
+              private messageService: MessageService) {
 
-  ) {
     this.newStreamForm = new FormGroup({
       lcn: new FormControl({ value: '', disabled: false }),
       usi: new FormControl({ value: '', disabled: false }),
@@ -73,6 +62,9 @@ export class StreamComponent implements OnInit {
     ];
   }
 
+   /**
+   * on init : we get the streams List using the streamService , and then we display the data to the user
+   */
   ngOnInit() {
     this.streamService.getStream().subscribe(
       data => {
@@ -92,7 +84,29 @@ export class StreamComponent implements OnInit {
       }
     );
   }
+  
+  /**
+   * @function showDialog :Display the new/Edit Video Dialog
+   * @param streamID: if the streamID  is  undefined, it means that we are in an create  state , otherwise , we are in a edit state .
+   */
 
+  showDialog(streamID) {
+    this.validatingErrosBlock = false;
+    if (streamID === undefined) {
+      this.dialogState = 'create';
+      this.newStreamForm.reset();
+      this.display = true;
+    } else {
+      this.streamID = streamID;
+      this.dialogState = 'edit';
+      this.getStreamByID();
+      this.display = true;
+    }
+  }
+
+   /**
+   * @function saveStream : if the Form fields are valid , we create the Stream Object and then we use the streamService to create/update the stream 
+   */
   saveStream(value: string) {
     if (this.validateFields()) {
 
@@ -141,6 +155,10 @@ export class StreamComponent implements OnInit {
     }
   }
 
+
+  /**
+   * @function getStreamByID : we get a stream by its ID 
+   */
   getStreamByID() {
     this.streamService.getStreamByID(this.streamID).subscribe(
       data => {
@@ -150,20 +168,6 @@ export class StreamComponent implements OnInit {
         this.messageService.add({ key: 'topLeftMessages', severity: 'error', summary: 'HTTP Error ', detail: "HTTP GET StreamByID failed, please check the API: " + err.message });
       }
     );
-  }
-
-  showDialog(streamID) {
-    this.validatingErrosBlock = false;
-    if (streamID === undefined) {
-      this.dialogState = 'create';
-      this.newStreamForm.reset();
-      this.display = true;
-    } else {
-      this.streamID = streamID;
-      this.dialogState = 'edit';
-      this.getStreamByID();
-      this.display = true;
-    }
   }
 
   selectOptionsValues() {
@@ -182,6 +186,10 @@ export class StreamComponent implements OnInit {
     }
   }
 
+  /**
+   * @function ConfirmDeleteStream : delete a stream  by its ID.
+   * @param id : stream ID.
+   */
   ConfirmDeleteStream(id: number) {
 
     this.confirmationService.confirm({
@@ -202,6 +210,9 @@ export class StreamComponent implements OnInit {
     });
   }
 
+  /**
+   * @function reloadStreamTable : when we create/Edit a stream , we need to reload the data so we can have like a real Time datatable. 
+   */
   reloadStreamTable() {
     this.streamService.getStream().subscribe(
       data => {
@@ -227,6 +238,9 @@ export class StreamComponent implements OnInit {
     this.newStreamForm.patchValue({ port: data.port });
   }
 
+   /**
+   * @function validFields: validate the create/Edit Form.
+   */
   validateFields() {
     this.validationErrors = [];
     let ValidForm = true;
