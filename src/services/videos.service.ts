@@ -77,7 +77,7 @@ export class VideosService {
   * @param fileToUpload: The Video File
   */
   uploadVideo(fileToUpload: File): Observable<string> {
-    const endpoint = this.apiUrl+'/uploadVideo';
+    const endpoint = this.apiUrl+'uploadVideo';
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     return this.http

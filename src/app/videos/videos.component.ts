@@ -85,6 +85,12 @@ export class VideosComponent implements OnInit {
       this.display = true;
     }
   }
+
+  closeDialog(){
+    this.uploded = false;
+    this.uploadError = false;
+    this.display=false;
+  }
   /**
    * @function saveVideo : if the Form fields are valid , we create the Video Object and then we use the videoService to create/update the video 
    */
@@ -260,7 +266,7 @@ export class VideosComponent implements OnInit {
         },
         err => {
           this.msgs = [];
-          this.uploadMessages.push({ severity: 'error', summary: 'HTTP Upload Videp Error , Please check the API' });
+          this.uploadMessages.push({ severity: 'error', summary: 'HTTP Upload Video Error , Please check the API' });
         });
     } else {
       this.msgs = [];
